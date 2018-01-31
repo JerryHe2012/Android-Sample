@@ -10,11 +10,12 @@ import android.widget.TextView;
 public class SettingGroup extends Activity {
 
 
-    Button btn_Goback;
+    Button btn_GoFirstPage;
     Button btn_DetailActivity;
     String account;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_group);
 
@@ -31,12 +32,10 @@ public class SettingGroup extends Activity {
 
     }
 
-
-
     public void GoBack_mainPage()
     {
-        btn_Goback = (Button)findViewById(R.id.btn_Goback);
-        btn_Goback.setOnClickListener(new View.OnClickListener() {
+        btn_GoFirstPage = (Button)findViewById(R.id.btn_GoFirstPage);
+        btn_GoFirstPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -46,7 +45,7 @@ public class SettingGroup extends Activity {
 
     public void GoTo_DetailActivity()
     {
-        btn_DetailActivity = (Button)findViewById(R.id.btn_detail);
+        btn_DetailActivity = (Button)findViewById(R.id.btn_ToThirdPage);
         btn_DetailActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
