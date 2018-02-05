@@ -28,61 +28,33 @@ public class MainActivity extends Activity {
 
 
 
-        listView = (ListView) findViewById(R.id.listViewGame);
-        String[] values = new String[]{
-                "PUBG",
-                "League",
-                "OverWatch",
-                "Whatever"
-        };
+       // listView = (ListView) findViewById(R.id.listViewGame);
+//        String[] values = new String[]{
+//                "Start Plan",
+  //              "Check Plan",
+   //             "History"
+
+      //  };
         // Defining a new adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
-        listView.setAdapter(adapter); // Assign adapter to ListView
+      //  ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
+       // listView.setAdapter(adapter); // Assign adapter to ListView
         // ListView Item Click Listener
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                int itemPosition = position;
-                String itemValue = (String) listView.getItemAtPosition(position).toString();
-                if(itemValue == null)
-                {
+        //listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    //        @Override
+  //          public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        //        int itemPosition = position;
+        //        String itemValue = (String) listView.getItemAtPosition(position).toString();
+        //        if(itemValue == null)
+        //        {
 
-                }
-
-
-                Toast.makeText(getApplicationContext(), "Position: " +itemPosition + " ListItem : " + itemValue, Toast.LENGTH_LONG).show();
+//                }
 
 
-
-            }
-        });
-
-
-        final EditText edit = (EditText) findViewById(R.id.edit);
-        btn_Second = (Button)findViewById(R.id.btn_Group);
-        btn_Second.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(edit.getText().length() == 0)
-                {
-                    edit.setError("Please enter your name. ");
-                }
-                else
-                {
-                    Intent intent = new Intent(MainActivity.this, SettingGroup.class);
-                    intent.putExtra("account",edit.getText().toString());
-                    startActivity(intent);
-                }
-
-            }
-        });
+                //Toast.makeText(getApplicationContext(), "Position: " +itemPosition + " ListItem : " + itemValue, Toast.LENGTH_LONG).show();
 
 
 
-
+//            }
+//        });
     }
-
-
-
 }
