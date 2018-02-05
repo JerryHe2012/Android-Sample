@@ -18,11 +18,11 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:contentDescription=""
             android:scaleType="centerCrop"
-            android:src="@drawable/fruit_19590_mopik"
+            android:src="@drawable/watermelon"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -35,7 +35,7 @@
             android:textSize="32sp" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btn_Start_Plan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="200dp"
             android:text="History"
-            app:layout_constraintBottom_toTopOf="@+id/button3"
+            app:layout_constraintBottom_toTopOf="@+id/btn_Start_Plan"
             app:layout_constraintTop_toTopOf="@+id/frameLayout"
             tools:layout_editor_absoluteX="154dp" />
 

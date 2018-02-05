@@ -4,28 +4,30 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
-
-
-    public Button btn_Second;
-    public ListView listView;
-
-
+    public Button btn_StartPlan;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Bundle extras = getIntent().getExtras();
 
-
+        btn_StartPlan = (Button)findViewById(R.id.btn_Start_Plan);
+        btn_StartPlan.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent getsecondpage = new Intent(MainActivity.this, GetStoreActivity.class);
+                startActivity(getsecondpage);
+            }});
+    }
+}
 
 
        // listView = (ListView) findViewById(R.id.listViewGame);
@@ -56,5 +58,5 @@ public class MainActivity extends Activity {
 
 //            }
 //        });
-    }
-}
+
+
