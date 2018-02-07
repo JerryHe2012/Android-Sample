@@ -12,25 +12,38 @@ import android.widget.TableRow;
 
 public class DetailActivity extends Activity {
     public Button btn_AddButton;
+    public Button btn_SavePlan;
+
+
+    GrocerySingleton grocery = GrocerySingleton.getInstance();
+
+   // GrocerySingleton grocerySingleton = new GrocerySingleton();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+
+
         final TableLayout theLayout = (TableLayout)findViewById(R.id.LLgoods);
-
-
+        grocery.setNumberOfItem(0);
         btn_AddButton = (Button)findViewById(R.id.btn_AddButton);
+        btn_SavePlan = (Button)findViewById(R.id.btn_SavePlan);
         btn_AddButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                int j = 9;
+
+
+                int j = grocery.getNumberOfItem();
                 TableRow theRow = new TableRow(theLayout.getContext());
                 theRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
                 theRow.setId(j);
                 theLayout.addView(theRow);
+                j++;
+                grocery.setNumberOfItem(j);
 
                 int i = 0;
 
@@ -47,7 +60,16 @@ public class DetailActivity extends Activity {
                 btn_NewItemButton2.setText("-");
                 i++;
                 theRow.addView(btn_NewItemButton2);
-
             }});
+
+        btn_SavePlan.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent getfinalpage = new Intent(DetailActivity.this, ResultActivity.class);
+                startActivity(getfinalpage);
+            }});
+
     }
 }

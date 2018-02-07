@@ -16,7 +16,7 @@ public class GrocerySingleton {
     private int year;
     private int month;
     private int day;
-
+    private int NumberOfItem;
 
 
     public static GrocerySingleton getInstance() {
@@ -33,6 +33,13 @@ public class GrocerySingleton {
     public String getCustomername() {return customerName;}
     public String getItemName() {return ItemName;}
     public int getQunatity() {return quantityItem;}
+    public int getNumberOfItem() {return NumberOfItem; }
+
+
+    public void setNumberOfItem(int numItem)
+    {
+        NumberOfItem = numItem;
+    }
 
 
 
