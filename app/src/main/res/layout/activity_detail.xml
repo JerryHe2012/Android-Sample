@@ -7,20 +7,36 @@
     android:background="@drawable/ic_launcher_background"
     tools:context="com.example.hpark4435.a01.DetailActivity">
 
-    <FrameLayout
-        android:layout_width="371dp"
-        android:layout_height="192dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+    <TableLayout
+        android:id="@+id/LLgoods"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_AddButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
+    </TableLayout>
 
+    <Button
+        android:id="@+id/btn_AddButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Add Item"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    </FrameLayout>
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Save Plan"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

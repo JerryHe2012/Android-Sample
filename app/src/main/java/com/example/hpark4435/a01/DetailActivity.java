@@ -33,6 +33,7 @@ public class DetailActivity extends Activity {
                 theLayout.addView(theRow);
 
                 int i = 0;
+
                 Button btn_NewItemButton = new Button(theRow.getContext());
                 btn_NewItemButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
                 btn_NewItemButton.setId(i);
