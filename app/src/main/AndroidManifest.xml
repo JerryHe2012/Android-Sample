@@ -19,7 +19,7 @@
         <activity android:name=".DetailActivity" />
         <activity
             android:name=".GetStoreActivity"
-            android:label="@string/title_activity_get_store"></activity>
+            android:label="@string/app_name"></activity>
     </application>
 
 </manifest>

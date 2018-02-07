@@ -32,8 +32,7 @@
             android:layout_marginBottom="0dp"
             android:layout_marginTop="250dp"
             android:gravity="center"
-            android:text="GROCERIOR"
-            android:textAppearance="@android:style/TextAppearance.Material.Widget.ActionBar.Title"
+            android:text="@string/app_name"
             android:textColor="#0c1"
             android:textSize="40sp" />
 
@@ -42,7 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="300dp"
-            android:text="Start Plan"
+            android:text="@string/start_plan"
+            android:textColor="#0c1"
             app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
             app:layout_constraintTop_toTopOf="@+id/frameLayout"
             tools:layout_editor_absoluteX="9dp" />
@@ -52,7 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="350dp"
-            android:text="Check Plan"
+            android:text="@string/check_plan"
+            android:textColor="#0c1"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="0dp" />
 
@@ -61,7 +62,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="400dp"
-            android:text="History"
+            android:text="@string/history"
+            android:textColor="#0c1"
             app:layout_constraintBottom_toTopOf="@+id/btn_Start_Plan"
             app:layout_constraintTop_toTopOf="@+id/frameLayout"
             tools:layout_editor_absoluteX="154dp" />
