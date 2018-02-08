@@ -48,7 +48,7 @@
             tools:layout_editor_absoluteX="9dp" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btn_viewPlan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="350dp"
@@ -58,7 +58,7 @@
             tools:layout_editor_absoluteY="0dp" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/btn_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="400dp"

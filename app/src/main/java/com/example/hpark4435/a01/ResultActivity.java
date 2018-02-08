@@ -57,47 +57,46 @@ public class ResultActivity extends Activity {
 
         for (int i = 0; i < j; i++)
         {
-            TableRow theRow = new TableRow(theLayout.getContext());
-            theRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
-            theRow.setId(i * 4);
-            theLayout.addView(theRow);
+            if (grocery.getQunatity(i) != 0) {
+                TableRow theRow = new TableRow(theLayout.getContext());
+                theRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+                theRow.setId(i * 4);
+                theLayout.addView(theRow);
 
-            TextView newItem = new TextView(theRow.getContext());
-            newItem.setLayoutParams(new TableRow.LayoutParams(thewidth, TableLayout.LayoutParams.WRAP_CONTENT));
-            newItem.setId((i * 4) + 1);
-            newItem.setText(grocery.getItemName(i));
-            theRow.addView(newItem);
+                TextView newItem = new TextView(theRow.getContext());
+                newItem.setLayoutParams(new TableRow.LayoutParams(thewidth, TableLayout.LayoutParams.WRAP_CONTENT));
+                newItem.setId((i * 4) + 1);
+                newItem.setText(grocery.getItemName(i));
+                theRow.addView(newItem);
 
-            TextView newItemCount = new TextView(theRow.getContext());
-            newItemCount.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-            newItemCount.setId((i * 4) + 2);
-            newItemCount.setText(Integer.toString(grocery.getQunatity(i)));
-            theRow.addView(newItemCount);
+                TextView newItemCount = new TextView(theRow.getContext());
+                newItemCount.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+                newItemCount.setId((i * 4) + 2);
+                newItemCount.setText(Integer.toString(grocery.getQunatity(i)));
+                theRow.addView(newItemCount);
 
-            final CheckBox newCheck = new CheckBox(theRow.getContext());
-            newCheck.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-            newCheck.setId((i * 4) + 3);
-            theRow.addView(newCheck);
+                final CheckBox newCheck = new CheckBox(theRow.getContext());
+                newCheck.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+                newCheck.setId((i * 4) + 3);
+                theRow.addView(newCheck);
 
-            newCheck.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Take action.
-                    int totalchecked = grocery.getCheckQuantity();
-                    int total = grocery.getNumberOfItem();
-                    if (newCheck.isChecked())
-                    {
-                        totalchecked = totalchecked + 1;
+                newCheck.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Take action.
+                        int totalchecked = grocery.getCheckQuantity();
+                        int total = grocery.getNumberOfItem();
+                        if (newCheck.isChecked()) {
+                            totalchecked = totalchecked + 1;
+                        } else {
+                            totalchecked = totalchecked - 1;
+                        }
+                        grocery.setCheckQuantity(totalchecked);
+                        int theProgress = (100 * totalchecked) / total;
+                        theBar.setProgress(theProgress);
                     }
-                    else
-                    {
-                        totalchecked = totalchecked - 1;
-                    }
-                    grocery.setCheckQuantity(totalchecked);
-                    int theProgress = (100 * totalchecked) / total;
-                    theBar.setProgress(theProgress);
-                }
-            });
+                });
+            }
         }
     }
 }
