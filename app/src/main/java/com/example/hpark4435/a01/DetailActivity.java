@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 public class DetailActivity extends Activity {
     public Button btn_AddButton;
     public Button btn_SavePlan;
+
+
 
 
     GrocerySingleton grocery = GrocerySingleton.getInstance();
@@ -40,20 +43,21 @@ public class DetailActivity extends Activity {
             @Override
             public void onClick(View view)
             {
+
                 int j = grocery.getNumberOfItem();
                 grocery.setQuantity();
+                int thewight = theLayout.getWidth();
+                thewight = thewight - 380;
                 TableRow theRow = new TableRow(theLayout.getContext());
                 theRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                 theRow.setId(j * 5);
                 theLayout.addView(theRow);
 
                 EditText newItem = new EditText(theRow.getContext());
-                newItem.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-                newItem.setWidth(700);
+                newItem.setLayoutParams(new TableRow.LayoutParams(thewight, TableRow.LayoutParams.WRAP_CONTENT));
                 newItem.setId((j * 5) + 1);
                 newItem.setText("New Item");
                 theRow.addView(newItem);
-
 
                 final Button btn_PlusButton = new Button(theRow.getContext());
                 btn_PlusButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
