@@ -14,6 +14,7 @@ public class GrocerySingleton {
     private String[] itemName = new String[100];
     private int[] itemQuantity = new int[100];
     private int NumberOfItem;
+    private int checkQuantity;
 
 
     public static GrocerySingleton getInstance() {
@@ -32,6 +33,7 @@ public class GrocerySingleton {
     public int getNumberOfItem() {return NumberOfItem; }
     public String getDate() {return planDate; }
     public String getStoreName() {return storeName; }
+    public int getCheckQuantity() {return  checkQuantity; }
 
 
     public void setNumberOfItem(int numItem)
@@ -75,5 +77,10 @@ public class GrocerySingleton {
 
         storeName = name;
 
+    }
+
+    public void setCheckQuantity(int value)
+    {
+        checkQuantity = value;
     }
 }
