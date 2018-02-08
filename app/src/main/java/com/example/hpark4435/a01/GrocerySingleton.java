@@ -41,7 +41,29 @@ public class GrocerySingleton {
         NumberOfItem = numItem;
     }
 
+    public void setItemName(String newItem)
+    {
+        ItemName = newItem;
+    }
 
 
+    public void setQuantity()
+    {
+        quantityItem = 0;
+    }
+
+    public void setQuantityPlus()
+    {
+
+        quantityItem = quantityItem+1;
+
+    }
+
+    public void setQuantityMinus()
+    {
+
+        quantityItem = quantityItem-1;
+
+    }
 
 }
