@@ -20,13 +20,13 @@ public class ResultActivity extends Activity {
         setContentView(R.layout.activity_result);
 
         final GrocerySingleton grocery = GrocerySingleton.getInstance();
-        int j = grocery.getNumberOfItem();
+        int totalLine = grocery.getActualTotalLine();
         TableLayout theLayout = (TableLayout)findViewById(R.id.TLfinal);
         final ProgressBar theBar = (ProgressBar)findViewById(R.id.progressBar);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int width = displayMetrics.widthPixels;
-        int thewidth = width - 180;
+        int thewidth = width - 200;
         int theID = -1;
 
         TableRow theFirstRow = new TableRow(theLayout.getContext());
@@ -55,7 +55,7 @@ public class ResultActivity extends Activity {
         newDate.setText(grocery.getDate());
         theSecondRow.addView(newDate);
 
-        for (int i = 0; i < j; i++)
+        for (int i = 0; i < totalLine; i++)
         {
             if (grocery.getQunatity(i) != 0) {
                 TableRow theRow = new TableRow(theLayout.getContext());

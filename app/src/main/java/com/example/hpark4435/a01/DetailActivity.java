@@ -41,7 +41,7 @@ public class DetailActivity extends Activity {
 
 
         final TableLayout theLayout = (TableLayout)findViewById(R.id.LLgoods);
-        grocery.setNumberOfItem(1);
+        grocery.setNumberOfItem(0);
         btn_AddButton = (Button)findViewById(R.id.btn_AddButton);
         btn_SavePlan = (Button)findViewById(R.id.btn_SavePlan);
         btn_AddButton.setOnClickListener(new View.OnClickListener()
@@ -50,49 +50,50 @@ public class DetailActivity extends Activity {
             public void onClick(View view)
             {
 
-                int j = 0;
-                j = grocery.getNumberOfItem();
-                grocery.setQuantity(j);
+                int totalLine = 0;
+                totalLine = grocery.getNumberOfItem();
+                grocery.setQuantity(totalLine);
                 int thewight = theLayout.getWidth();
                 thewight = thewight - 525;
 
                 final TableRow theRow = new TableRow(theLayout.getContext());
                 theRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
-                theRow.setId(j * 6);
+                theRow.setId(totalLine * 6);
                 theLayout.addView(theRow);
                 Log.i("Detail Activity", "Created new table row");
 
-                EditText newItem = new EditText(theRow.getContext());
+                final EditText newItem = new EditText(theRow.getContext());
                 newItem.setLayoutParams(new TableRow.LayoutParams(thewight, TableRow.LayoutParams.WRAP_CONTENT));
-                newItem.setId((j * 6) + 1);
+                newItem.setId((totalLine * 6) + 1);
                 newItem.setText("New Item");
                 theRow.addView(newItem);
                 Log.i("Detail Activity", "Created new edit text item ");
 
                 final Button btn_PlusButton = new Button(theRow.getContext());
                 btn_PlusButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-                btn_PlusButton.setId((j * 6) + 2);
+                btn_PlusButton.setId((totalLine * 6) + 2);
                 btn_PlusButton.setText("+");
                 theRow.addView(btn_PlusButton);
                 Log.i("Detail Activity", "Created new item increment button ");
 
-                TextView newCount = new TextView(theRow.getContext());
+                final TextView newCount = new TextView(theRow.getContext());
                 newCount.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-                newCount.setId((j * 6) + 3);
-                newCount.setText(Integer.toString(grocery.getQunatity(j)));
+                newCount.setId((totalLine * 6) + 3);
+                grocery.setQuantityPlus(totalLine);
+                newCount.setText(Integer.toString(grocery.getQunatity(totalLine)));
                 theRow.addView(newCount);
                 Log.i("Detail Activity", "Created new textview object ");
 
                 final Button btn_MinusButton = new Button(theRow.getContext());
                 btn_MinusButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-                btn_MinusButton.setId((j * 6) + 4);
+                btn_MinusButton.setId((totalLine * 6) + 4);
                 btn_MinusButton.setText("-");
                 theRow.addView(btn_MinusButton);
                 Log.i("Detail Activity", "Created new decrement button ");
 
                 final Button btn_deleteItem = new Button(theRow.getContext());
                 btn_deleteItem.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-                btn_deleteItem.setId((j * 6) + 5);
+                btn_deleteItem.setId((totalLine * 6) + 5);
                 btn_deleteItem.setText("X");
                 theRow.addView(btn_deleteItem);
                 Log.i("Detail Activity", "Created new delete button ");
@@ -105,7 +106,8 @@ public class DetailActivity extends Activity {
                         Log.i("Detail Activity", "User deleted item");
                         int itemNum = grocery.getNumberOfItem();
                         int i = btn_deleteItem.getId();
-                        grocery.setNumberOfItem((i - 5)/6);
+                        grocery.setNumberOfItem(itemNum - 1);
+                        grocery.setQuantity((i - 5) / 6);
                         theLayout.removeView((TableRow)findViewById(i - 5));
                     }
                 });
@@ -143,10 +145,10 @@ public class DetailActivity extends Activity {
                     }
                 });
 
-                j++;
-                grocery.setNumberOfItem(j);
-               // j = 1 + grocery.getNumberOfItem();
-                //grocery.setNumberOfItem(j);
+                totalLine++;
+                grocery.setNumberOfItem(totalLine);
+               // totalLine = 1 + grocery.getNumberOfItem();
+                //grocery.setNumberOfItem(totalLine);
 
 
 
@@ -158,10 +160,10 @@ public class DetailActivity extends Activity {
             public void onClick(View view)
             {
                 Log.i("Detail Activity", "User clicked on save plan");
-                int j = grocery.getNumberOfItem();
-                for (int i = 0; i < j; i++)
+                int totalLine = grocery.getActualTotalLine();
+                for (int i = 0; i < totalLine; i++)
                 {
-                    if (grocery.getQunatity((i - 2)/6) != 0)
+                    if (grocery.getQunatity(i) != 0)
                     {
                         TextView theCount = (TextView) findViewById((i * 6) + 1);
                         grocery.setItemName(theCount.getText().toString(), i);

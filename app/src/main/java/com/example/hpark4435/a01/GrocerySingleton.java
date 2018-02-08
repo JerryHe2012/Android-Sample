@@ -14,6 +14,7 @@ public class GrocerySingleton {
     private String[] itemName = new String[100];
     private int[] itemQuantity = new int[100];
     private int NumberOfItem;
+    private int actualTotalLine;
     private int checkQuantity;
 
 
@@ -34,6 +35,7 @@ public class GrocerySingleton {
     public String getDate() {return planDate; }
     public String getStoreName() {return storeName; }
     public int getCheckQuantity() {return  checkQuantity; }
+    public int getActualTotalLine() {return actualTotalLine;}
 
 
     public void setNumberOfItem(int numItem)
@@ -83,4 +85,6 @@ public class GrocerySingleton {
     {
         checkQuantity = value;
     }
+
+    public void setActualTotalLine(int value) {actualTotalLine = value; }
 }
