@@ -9,13 +9,10 @@ package com.example.hpark4435.a01;
 public class GrocerySingleton {
     private static GrocerySingleton ourInstance = null;
 
-    private String customerName;
-    private int list_Item;
-    private String ItemName;
-    private int quantityItem;
-    private int year;
-    private int month;
-    private int day;
+    private  String planDate;
+    private String storeName;
+    private String[] itemName = new String[100];
+    private int[] itemQuantity = new int[100];
     private int NumberOfItem;
 
 
@@ -30,10 +27,11 @@ public class GrocerySingleton {
     //a private constructor so no instances can be made outside this class
     private GrocerySingleton() {} // By using this, no outer class can initialize this class's object
 
-    public String getCustomername() {return customerName;}
-    public String getItemName() {return ItemName;}
-    public int getQunatity() {return quantityItem;}
+    public String getItemName(int index) {return itemName[index];}
+    public int getQunatity(int index) {return itemQuantity[index];}
     public int getNumberOfItem() {return NumberOfItem; }
+    public String getDate() {return planDate; }
+    public String getStoreName() {return storeName; }
 
 
     public void setNumberOfItem(int numItem)
@@ -41,29 +39,41 @@ public class GrocerySingleton {
         NumberOfItem = numItem;
     }
 
-    public void setItemName(String newItem)
+    public void setItemName(String newItem, int index)
     {
-        ItemName = newItem;
+        itemName[index] = newItem;
     }
 
 
-    public void setQuantity()
+    public void setQuantity(int index)
     {
-        quantityItem = 0;
+        itemQuantity[index] = 0;
     }
 
-    public void setQuantityPlus()
+    public void setQuantityPlus(int index)
     {
 
-        quantityItem = quantityItem+1;
-
-    }
-
-    public void setQuantityMinus()
-    {
-
-        quantityItem = quantityItem-1;
+        itemQuantity[index] = itemQuantity[index] + 1;
 
     }
 
+    public void setQuantityMinus(int index)
+    {
+
+        itemQuantity[index] = itemQuantity[index] - 1;
+
+    }
+
+    public void setDate(String date)
+    {
+
+        planDate = date;
+
+    }
+    public void setStoreName(String name)
+    {
+
+        storeName = name;
+
+    }
 }

@@ -45,9 +45,10 @@ public class DetailActivity extends Activity {
             {
 
                 int j = grocery.getNumberOfItem();
-                grocery.setQuantity();
+                grocery.setQuantity(j);
                 int thewight = theLayout.getWidth();
                 thewight = thewight - 380;
+
                 TableRow theRow = new TableRow(theLayout.getContext());
                 theRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                 theRow.setId(j * 5);
@@ -68,7 +69,7 @@ public class DetailActivity extends Activity {
                 TextView newCount = new TextView(theRow.getContext());
                 newCount.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
                 newCount.setId((j * 5) + 3);
-                newCount.setText(Integer.toString(grocery.getQunatity()));
+                newCount.setText(Integer.toString(grocery.getQunatity(j)));
                 theRow.addView(newCount);
 
                 final Button btn_MinusButton = new Button(theRow.getContext());
@@ -81,10 +82,11 @@ public class DetailActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         // Take action.
-                        grocery.setQuantityPlus();
                         int i = btn_PlusButton.getId();
+                        grocery.setQuantityPlus((i - 2)/5);
+
                         TextView theCount = (TextView)findViewById(i + 1);
-                        theCount.setText(Integer.toString(grocery.getQunatity()));
+                        theCount.setText(Integer.toString(grocery.getQunatity((i - 2)/5)));
                     }
                 });
 
@@ -92,10 +94,10 @@ public class DetailActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         // Take action.
-                        grocery.setQuantityMinus();
                         int i = btn_MinusButton.getId();
+                        grocery.setQuantityMinus((i - 4)/5);
                         TextView theCount = (TextView)findViewById(i - 1);
-                        theCount.setText(Integer.toString(grocery.getQunatity()));
+                        theCount.setText(Integer.toString(grocery.getQunatity((i - 4)/5)));
                     }
                 });
 
@@ -108,6 +110,12 @@ public class DetailActivity extends Activity {
             @Override
             public void onClick(View view)
             {
+                int j = grocery.getNumberOfItem();
+                for (int i = 0; i < j; i++)
+                {
+                    TextView theCount = (TextView)findViewById((i * 5) + 1);
+                    grocery.setItemName(theCount.getText().toString(), i);
+                }
                 Intent getfinalpage = new Intent(DetailActivity.this, ResultActivity.class);
                 startActivity(getfinalpage);
             }});
