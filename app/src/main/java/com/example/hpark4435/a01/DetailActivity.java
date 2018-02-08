@@ -1,4 +1,9 @@
 package com.example.hpark4435.a01;
+//Name: Adam Sosnowski, Hyunbin Park, Jinaqing He, Yinqi Li
+//Date: 2/8/2018
+//Course: Mobile applicatoin development assignment 1.
+//Description: This application will act as a grocery planner/list that a user will be able to use while grocery shopping. It is designed to be simple and easy to use
+//This particular file will contain the logic and code user to save items to the singleton class. Here, a user will be able to create/delete/edit new items for their grocery list.
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -16,7 +21,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.util.Log;
 public class DetailActivity extends Activity {
     public Button btn_AddButton;
     public Button btn_SavePlan;
@@ -34,9 +39,9 @@ public class DetailActivity extends Activity {
         setContentView(R.layout.activity_detail);
 
 
-        int quantity = 1;
+
         final TableLayout theLayout = (TableLayout)findViewById(R.id.LLgoods);
-        grocery.setNumberOfItem(0);
+        grocery.setNumberOfItem(1);
         btn_AddButton = (Button)findViewById(R.id.btn_AddButton);
         btn_SavePlan = (Button)findViewById(R.id.btn_SavePlan);
         btn_AddButton.setOnClickListener(new View.OnClickListener()
@@ -55,45 +60,51 @@ public class DetailActivity extends Activity {
                 theRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                 theRow.setId(j * 6);
                 theLayout.addView(theRow);
+                Log.i("Detail Activity", "Created new table row");
 
                 EditText newItem = new EditText(theRow.getContext());
                 newItem.setLayoutParams(new TableRow.LayoutParams(thewight, TableRow.LayoutParams.WRAP_CONTENT));
                 newItem.setId((j * 6) + 1);
                 newItem.setText("New Item");
                 theRow.addView(newItem);
+                Log.i("Detail Activity", "Created new edit text item ");
 
                 final Button btn_PlusButton = new Button(theRow.getContext());
                 btn_PlusButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
                 btn_PlusButton.setId((j * 6) + 2);
                 btn_PlusButton.setText("+");
                 theRow.addView(btn_PlusButton);
+                Log.i("Detail Activity", "Created new item increment button ");
 
                 TextView newCount = new TextView(theRow.getContext());
                 newCount.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
                 newCount.setId((j * 6) + 3);
                 newCount.setText(Integer.toString(grocery.getQunatity(j)));
                 theRow.addView(newCount);
+                Log.i("Detail Activity", "Created new textview object ");
 
                 final Button btn_MinusButton = new Button(theRow.getContext());
                 btn_MinusButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
                 btn_MinusButton.setId((j * 6) + 4);
                 btn_MinusButton.setText("-");
                 theRow.addView(btn_MinusButton);
+                Log.i("Detail Activity", "Created new decrement button ");
 
                 final Button btn_deleteItem = new Button(theRow.getContext());
                 btn_deleteItem.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
                 btn_deleteItem.setId((j * 6) + 5);
                 btn_deleteItem.setText("X");
                 theRow.addView(btn_deleteItem);
-
+                Log.i("Detail Activity", "Created new delete button ");
 
 
                 btn_deleteItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         // Take action.
-                        int j = grocery.getNumberOfItem();
-                        int i = theRow.getId();
+                        Log.i("Detail Activity", "User deleted item");
+                        int itemNum = grocery.getNumberOfItem();
+                        int i = btn_deleteItem.getId();
                         grocery.setNumberOfItem((i - 5)/6);
                         theLayout.removeView((TableRow)findViewById(i - 5));
                     }
@@ -103,6 +114,7 @@ public class DetailActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         // Take action.
+                        Log.i("Detail Activity", "User Incremented Item Quantity");
                         int i = btn_PlusButton.getId();
                         grocery.setQuantityPlus((i - 2)/6);
 
@@ -115,6 +127,7 @@ public class DetailActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         // Take action.
+                        Log.i("Detail Activity", "User Decremented Item Quantity");
                         int i = btn_MinusButton.getId();
                         TextView theCount = (TextView)findViewById(i - 1);
                         if(Integer.parseInt(theCount.getText().toString()) > 1)
@@ -125,6 +138,7 @@ public class DetailActivity extends Activity {
                         else
                         {
                             Toast.makeText(getApplicationContext(),"Can't have a quantity less than 1!",Toast.LENGTH_SHORT).show();
+                            Log.i("Detail Activity", "Cannot specify a quantity less than 1!");
                         }
                     }
                 });
@@ -143,6 +157,7 @@ public class DetailActivity extends Activity {
             @Override
             public void onClick(View view)
             {
+                Log.i("Detail Activity", "User clicked on save plan");
                 int j = grocery.getNumberOfItem();
                 for (int i = 0; i < j; i++)
                 {
