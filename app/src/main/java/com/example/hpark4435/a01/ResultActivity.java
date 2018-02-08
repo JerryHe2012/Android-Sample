@@ -78,7 +78,7 @@ public class ResultActivity extends Activity {
             newCheck.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
             newCheck.setId((i * 4) + 3);
             theRow.addView(newCheck);
-            
+
             newCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
