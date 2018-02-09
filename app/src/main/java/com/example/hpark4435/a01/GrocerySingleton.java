@@ -1,5 +1,8 @@
 package com.example.hpark4435.a01;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Hpark4435 on 2/6/2018.
  */
@@ -8,8 +11,10 @@ package com.example.hpark4435.a01;
 // ClassicSingleton class maintains a static reference to the lone singleton instance and returns that reference from the static getInstance() method.
 public class GrocerySingleton {
     private static GrocerySingleton ourInstance = null;
+    private static List<GroceryPlan> planList;
+    private int numberOfPlans;
 
-    private  String planDate;
+    private String planDate;
     private String storeName;
     private String[] itemName = new String[100];
     private int[] itemQuantity = new int[100];
@@ -27,7 +32,18 @@ public class GrocerySingleton {
     }
 
     //a private constructor so no instances can be made outside this class
-    private GrocerySingleton() {} // By using this, no outer class can initialize this class's object
+    private GrocerySingleton() {
+        planList = new ArrayList<>();
+        numberOfPlans = 0;
+    } // By using this, no outer class can initialize this class's object
+
+    public void addPlan(GroceryPlan newPlan){
+        planList.add(newPlan);
+        numberOfPlans++;
+    }
+
+
+    public int getNumberOfPlans() {return numberOfPlans;}
 
     public String getItemName(int index) {return itemName[index];}
     public int getQunatity(int index) {return itemQuantity[index];}
