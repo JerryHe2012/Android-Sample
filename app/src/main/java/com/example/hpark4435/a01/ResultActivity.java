@@ -2,7 +2,7 @@ package com.example.hpark4435.a01;
 
 /* FILE         : ResultActivity.java
  * PROG         : PROG3150 - A01
- * PROGRAMMER   : Jerry He, Kevin Park, Adam Sosnowski, Yingqi
+ * PROGRAMMER   : Jerry He, Kevin Park, Adam Sosnowski, Yinqi Li
  * DATE         : 2018 - 2 - 9
  * DESCRIPTION  : This java file is used for displaying result of shopping list. It displays what user chose and saved.
  *                After that, user is able to see shopping list in this page, and can check if they found it in the market.
@@ -128,8 +128,8 @@ public class ResultActivity extends Activity {
                             totalchecked = totalchecked - 1;
                         }
                         grocery.setCheckQuantity(totalchecked);
-                        int theProgress = (100 * totalchecked) / total;
-                        theBar.setProgress(theProgress);
+                        int totalProgress = (100 * totalchecked) / total;      // Value of Total progress
+                        theBar.setProgress(totalProgress);                      // implement in the progressBar
                         Log.i("Result Activity", "Displaying progress bar depends on user choose.");
                     }
                 });
