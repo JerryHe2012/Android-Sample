@@ -54,7 +54,7 @@ public class GrocerySingleton {
 
 
     /* METHOD       : addPlan
-     * PARAMETER    : GrocereyPlan newPlan -
+     * PARAMETER    : GrocereyPlan newPlan - new Plan that user wants to add
      * RETURN       : None
      * DESCRIPTION  : This method is used for giving access to each classes.
      *                Through this method, it enables to acess each item in the different classes.
