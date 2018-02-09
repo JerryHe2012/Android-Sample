@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_launcher_background"
+    android:background="@color/colorGreen"
     tools:context="com.example.hpark4435.a01.DetailActivity">
 
     <TableLayout

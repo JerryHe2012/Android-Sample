@@ -144,11 +144,14 @@ public class DetailActivity extends Activity {
                     }
                 });
 
-                newItem.setOnClickListener(new View.OnClickListener() {
+                newItem.setOnFocusChangeListener (new View.OnFocusChangeListener() {
                     @Override
-                    public void onClick(View view) {
-                        // Take action.
-
+                    public void onFocusChange(View view, boolean b) {
+                        String currentText = newItem.getText().toString();
+                        if (currentText.equals("New Item"))
+                        {
+                            newItem.setText("");
+                        }
                     }
                 });
 
