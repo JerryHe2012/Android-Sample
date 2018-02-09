@@ -55,20 +55,23 @@ public class DetailActivity extends Activity {
                 int thewight = theLayout.getWidth();
                 thewight = thewight - 525;
 
+                //Create a table row object to place ann the buttons and text boxes for new items
                 final TableRow theRow = new TableRow(theLayout.getContext());
                 theRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
-                theRow.setId(totalLine * 6);
-                theLayout.addView(theRow);
+                theRow.setId(totalLine * 6); //Ensure that each newly created object will have a unique ID.
+                theLayout.addView(theRow);      //We can enforce this by multiply the amount of items by the amount of widgets on the table row
                 Log.i("Detail Activity", "Created new table row");
 
+                //Add the edit text object for a new item where a user can edit.
                 final EditText newItem = new EditText(theRow.getContext());
                 newItem.setLayoutParams(new TableRow.LayoutParams(thewight, TableRow.LayoutParams.WRAP_CONTENT));
                 newItem.setSingleLine(true);
-                newItem.setId((totalLine * 6) + 1);
+                newItem.setId((totalLine * 6) + 1); //After multiplying to get a unique ID, add another value for each widget index.
                 newItem.setText("New Item");
                 theRow.addView(newItem);
                 Log.i("Detail Activity", "Created new edit text item ");
 
+                //Created the increment button that will allow a user to increase the quantity of an item
                 final Button btn_PlusButton = new Button(theRow.getContext());
                 btn_PlusButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
                 btn_PlusButton.setId((totalLine * 6) + 2);
@@ -76,6 +79,7 @@ public class DetailActivity extends Activity {
                 theRow.addView(btn_PlusButton);
                 Log.i("Detail Activity", "Created new item increment button ");
 
+                //Create the text view that displays the quantity of an item
                 final TextView newCount = new TextView(theRow.getContext());
                 newCount.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
                 newCount.setId((totalLine * 6) + 3);
@@ -84,6 +88,7 @@ public class DetailActivity extends Activity {
                 theRow.addView(newCount);
                 Log.i("Detail Activity", "Created new textview object ");
 
+                //Created the decrement button that will allow a user to decrease the quantity of an item
                 final Button btn_MinusButton = new Button(theRow.getContext());
                 btn_MinusButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
                 btn_MinusButton.setId((totalLine * 6) + 4);
@@ -91,6 +96,7 @@ public class DetailActivity extends Activity {
                 theRow.addView(btn_MinusButton);
                 Log.i("Detail Activity", "Created new decrement button ");
 
+                //And create a deletion button that can allow a user to remove an item from their grocery list.
                 final Button btn_deleteItem = new Button(theRow.getContext());
                 btn_deleteItem.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
                 btn_deleteItem.setId((totalLine * 6) + 5);
@@ -98,7 +104,7 @@ public class DetailActivity extends Activity {
                 theRow.addView(btn_deleteItem);
                 Log.i("Detail Activity", "Created new delete button ");
 
-
+                //A listener for the delete button that will execute any time the delete button is clicked
                 btn_deleteItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -107,24 +113,25 @@ public class DetailActivity extends Activity {
                         int itemNum = grocery.getNumberOfItem();
                         int i = btn_deleteItem.getId();
                         grocery.setNumberOfItem(itemNum - 1);
-                        grocery.setQuantity((i - 5) / 6);
-                        theLayout.removeView((TableRow)findViewById(i - 5));
+                        grocery.setQuantity((i - 5) / 6); //Change the quantity of the item
+                        theLayout.removeView((TableRow)findViewById(i - 5)); //Delete the current row and adjust the ID's
                     }
                 });
-
+                //A listener for the plus button that will execute any time the plus button is clicked
                 btn_PlusButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         // Take action.
                         Log.i("Detail Activity", "User Incremented Item Quantity");
                         int i = btn_PlusButton.getId();
-                        grocery.setQuantityPlus((i - 2)/6);
+                        grocery.setQuantityPlus((i - 2)/6); //Increment the quantity
 
                         TextView theCount = (TextView)findViewById(i + 1);
                         theCount.setText(Integer.toString(grocery.getQunatity((i - 2)/6)));
                     }
                 });
 
+                //A listener for the minus button that will execute any time the minus button is clicked
                 btn_MinusButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -134,7 +141,7 @@ public class DetailActivity extends Activity {
                         TextView theCount = (TextView)findViewById(i - 1);
                         if(Integer.parseInt(theCount.getText().toString()) > 1)
                         {
-                            grocery.setQuantityMinus((i - 4) / 6);
+                            grocery.setQuantityMinus((i - 4) / 6); //decrement the quantity
                             theCount.setText(Integer.toString(grocery.getQunatity((i - 4) / 6)));
                         }
                         else
@@ -145,6 +152,8 @@ public class DetailActivity extends Activity {
                     }
                 });
 
+                //Create a listener for the edit text
+                //This will clear the text to allot a user to easily modify an item
                 newItem.setOnFocusChangeListener (new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View view, boolean b) {
@@ -167,6 +176,8 @@ public class DetailActivity extends Activity {
 
             }});
 
+        //Finally, a save button listener
+        //This will save the contents on current page to the singleton
         btn_SavePlan.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -181,7 +192,7 @@ public class DetailActivity extends Activity {
 
                 for (int i = 0; i < totalLine; i++)
                 {
-                    if (grocery.getQunatity(i) != 0)
+                    if (grocery.getQunatity(i) != 0) //Ensure each item has a quantity of at least 1
                     {
                         TextView theCount = (TextView) findViewById((i * 6) + 1);
                         grocery.setItemName(theCount.getText().toString(), i);
@@ -195,7 +206,7 @@ public class DetailActivity extends Activity {
                 grocery.addPlan(newPlan);
                 
                 Intent getfinalpage = new Intent(DetailActivity.this, ResultActivity.class);
-                startActivity(getfinalpage);
+                startActivity(getfinalpage); //Go to the next page
             }});
 
     }
