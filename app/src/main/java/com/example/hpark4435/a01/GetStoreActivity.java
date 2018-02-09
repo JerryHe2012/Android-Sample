@@ -34,15 +34,20 @@ public class GetStoreActivity extends Activity {
             @Override
             public void onClick(View view)
             {
-                Log.i("GetStoreActivity", "Choose Item clicked");
-                Spinner theSpinner = (Spinner)findViewById(R.id.spinner);
-                String theStore = theSpinner.getSelectedItem().toString();
-                grocery.setStoreName(theStore);
-                DatePicker thePicker = (DatePicker)findViewById(R.id.datePicker);
-                String theDate = Integer.toString(thePicker.getDayOfMonth()) + " " + Integer.toString(thePicker.getMonth()) + " " + Integer.toString(thePicker.getYear());
-                grocery.setDate(theDate);
-                Intent getthirdpage = new Intent(GetStoreActivity.this, DetailActivity.class);
-                startActivity(getthirdpage);
+                try{
+                    Log.i("GetStoreActivity", "Choose Item clicked");
+                    Spinner theSpinner = (Spinner)findViewById(R.id.spinner);
+                    String theStore = theSpinner.getSelectedItem().toString();
+                    grocery.setStoreName(theStore);
+                    DatePicker thePicker = (DatePicker)findViewById(R.id.datePicker);
+                    String theDate = Integer.toString(thePicker.getDayOfMonth()) + " " + Integer.toString(thePicker.getMonth()) + " " + Integer.toString(thePicker.getYear());
+                    grocery.setDate(theDate);
+                    Intent getthirdpage = new Intent(GetStoreActivity.this, DetailActivity.class);
+                    startActivity(getthirdpage);
+                }
+                catch(Exception e){
+                    Log.e("Result Activity", e.toString());
+                }
             }});
     }
 

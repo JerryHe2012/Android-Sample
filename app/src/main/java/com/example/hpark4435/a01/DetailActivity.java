@@ -109,25 +109,36 @@ public class DetailActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         // Take action.
-                        Log.i("Detail Activity", "User deleted item");
-                        int itemNum = grocery.getNumberOfItem();
-                        int i = btn_deleteItem.getId();
-                        grocery.setNumberOfItem(itemNum - 1);
-                        grocery.setQuantity((i - 5) / 6); //Change the quantity of the item
-                        theLayout.removeView((TableRow)findViewById(i - 5)); //Delete the current row and adjust the ID's
+                        try{
+                            Log.i("Detail Activity", "User deleted item");
+                            int itemNum = grocery.getNumberOfItem();
+                            int i = btn_deleteItem.getId();
+                            grocery.setNumberOfItem(itemNum - 1);
+                            grocery.setQuantity((i - 5) / 6); //Change the quantity of the item
+                            theLayout.removeView((TableRow)findViewById(i - 5)); //Delete the current row and adjust the ID's
+                        }
+                        catch(Exception e){
+                            Log.e("Result Activity", e.toString());
+                        }
                     }
                 });
                 //A listener for the plus button that will execute any time the plus button is clicked
                 btn_PlusButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // Take action.
-                        Log.i("Detail Activity", "User Incremented Item Quantity");
-                        int i = btn_PlusButton.getId();
-                        grocery.setQuantityPlus((i - 2)/6); //Increment the quantity
+                        try{
+                            // Take action.
+                            Log.i("Detail Activity", "User Incremented Item Quantity");
+                            int i = btn_PlusButton.getId();
+                            grocery.setQuantityPlus((i - 2)/6); //Increment the quantity
 
-                        TextView theCount = (TextView)findViewById(i + 1);
-                        theCount.setText(Integer.toString(grocery.getQunatity((i - 2)/6)));
+                            TextView theCount = (TextView)findViewById(i + 1);
+                            theCount.setText(Integer.toString(grocery.getQunatity((i - 2)/6)));
+                        }
+                        catch(Exception e){
+                            Log.e("Result Activity", e.toString());
+                        }
+
                     }
                 });
 
@@ -135,19 +146,24 @@ public class DetailActivity extends Activity {
                 btn_MinusButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // Take action.
-                        Log.i("Detail Activity", "User Decremented Item Quantity");
-                        int i = btn_MinusButton.getId();
-                        TextView theCount = (TextView)findViewById(i - 1);
-                        if(Integer.parseInt(theCount.getText().toString()) > 1)
-                        {
-                            grocery.setQuantityMinus((i - 4) / 6); //decrement the quantity
-                            theCount.setText(Integer.toString(grocery.getQunatity((i - 4) / 6)));
+                        try{
+                            // Take action.
+                            Log.i("Detail Activity", "User Decremented Item Quantity");
+                            int i = btn_MinusButton.getId();
+                            TextView theCount = (TextView)findViewById(i - 1);
+                            if(Integer.parseInt(theCount.getText().toString()) > 1)
+                            {
+                                grocery.setQuantityMinus((i - 4) / 6); //decrement the quantity
+                                theCount.setText(Integer.toString(grocery.getQunatity((i - 4) / 6)));
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(),"Can't have a quantity less than 1!",Toast.LENGTH_SHORT).show();
+                                Log.i("Detail Activity", "Cannot specify a quantity less than 1!");
+                            }
                         }
-                        else
-                        {
-                            Toast.makeText(getApplicationContext(),"Can't have a quantity less than 1!",Toast.LENGTH_SHORT).show();
-                            Log.i("Detail Activity", "Cannot specify a quantity less than 1!");
+                        catch(Exception e){
+                            Log.e("Result Activity", e.toString());
                         }
                     }
                 });
@@ -157,10 +173,15 @@ public class DetailActivity extends Activity {
                 newItem.setOnFocusChangeListener (new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View view, boolean b) {
-                        String currentText = newItem.getText().toString();
-                        if (currentText.equals("New Item"))
-                        {
-                            newItem.setText("");
+                        try{
+                            String currentText = newItem.getText().toString();
+                            if (currentText.equals("New Item"))
+                            {
+                                newItem.setText("");
+                            }
+                        }
+                        catch(Exception e){
+                            Log.e("Result Activity", e.toString());
                         }
                     }
                 });
@@ -183,30 +204,35 @@ public class DetailActivity extends Activity {
             @Override
             public void onClick(View view)
             {
-                Log.i("Detail Activity", "User clicked on save plan");
-                int totalLine = grocery.getActualTotalLine();
+                try{
+                    Log.i("Detail Activity", "User clicked on save plan");
+                    int totalLine = grocery.getActualTotalLine();
 
-                // build new plan
-                GroceryPlan newPlan = new GroceryPlan();
-                newPlan.setDate(grocery.getDate());
+                    // build new plan
+                    GroceryPlan newPlan = new GroceryPlan();
+                    newPlan.setDate(grocery.getDate());
 
-                for (int i = 0; i < totalLine; i++)
-                {
-                    if (grocery.getQunatity(i) != 0) //Ensure each item has a quantity of at least 1
+                    for (int i = 0; i < totalLine; i++)
                     {
-                        TextView theCount = (TextView) findViewById((i * 6) + 1);
-                        grocery.setItemName(theCount.getText().toString(), i);
+                        if (grocery.getQunatity(i) != 0) //Ensure each item has a quantity of at least 1
+                        {
+                            TextView theCount = (TextView) findViewById((i * 6) + 1);
+                            grocery.setItemName(theCount.getText().toString(), i);
 
-                        GroceryItem newItem = new GroceryItem(grocery.getItemName(i), grocery.getQunatity(i));
-                        newPlan.addItem(newItem);
+                            GroceryItem newItem = new GroceryItem(grocery.getItemName(i), grocery.getQunatity(i));
+                            newPlan.addItem(newItem);
+                        }
                     }
-                }
 
-                // add new plan to the list
-                grocery.addPlan(newPlan);
+                    // add new plan to the list
+                    grocery.addPlan(newPlan);
                 
-                Intent getfinalpage = new Intent(DetailActivity.this, ResultActivity.class);
-                startActivity(getfinalpage); //Go to the next page
+                    Intent getfinalpage = new Intent(DetailActivity.this, ResultActivity.class);
+                    startActivity(getfinalpage); //Go to the next page
+                }
+                catch(Exception e){
+                    Log.e("Result Activity", e.toString());
+                }
             }});
 
     }

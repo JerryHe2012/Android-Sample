@@ -118,19 +118,25 @@ public class ResultActivity extends Activity {
                 newCheck.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // Take action.
-                        Log.i("Result Activity", "[Log] Inside of setOnClickListner Checking.");
-                        int totalchecked = grocery.getCheckQuantity();
-                        int total = grocery.getNumberOfItem();
-                        if (newCheck.isChecked()) {             // If user found item, they checked it.
-                            totalchecked = totalchecked + 1;    // Increase +1 for progress bar displaying
-                        } else {
-                            totalchecked = totalchecked - 1;
+
+                        try{
+                            // Take action.
+                            Log.i("Result Activity", "[Log] Inside of setOnClickListner Checking.");
+                            int totalchecked = grocery.getCheckQuantity();
+                            int total = grocery.getNumberOfItem();
+                            if (newCheck.isChecked()) {             // If user found item, they checked it.
+                                totalchecked = totalchecked + 1;    // Increase +1 for progress bar displaying
+                            } else {
+                                totalchecked = totalchecked - 1;
+                            }
+                            grocery.setCheckQuantity(totalchecked);
+                            int totalProgress = (100 * totalchecked) / total;      // Value of Total progress
+                            theBar.setProgress(totalProgress);                      // implement in the progressBar
+                            Log.i("Result Activity", "Displaying progress bar depends on user choose.");
                         }
-                        grocery.setCheckQuantity(totalchecked);
-                        int totalProgress = (100 * totalchecked) / total;      // Value of Total progress
-                        theBar.setProgress(totalProgress);                      // implement in the progressBar
-                        Log.i("Result Activity", "Displaying progress bar depends on user choose.");
+                        catch(Exception e){
+                            Log.e("Result Activity", e.toString());
+                        }
                     }
                 });
             }

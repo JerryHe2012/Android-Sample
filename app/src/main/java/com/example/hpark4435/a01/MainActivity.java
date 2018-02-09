@@ -20,11 +20,23 @@ public class MainActivity extends Activity {
     public Button history_button;   // button for check the history
     public Button btn_view_plan;    // button for check the plan already made
 
+    private Thread.UncaughtExceptionHandler androidDefaultUEH;
+    private Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {
+        public void uncaughtException(Thread thread, Throwable ex) {
+            Log.e("TestApplication", "Uncaught exception is: ", ex);
+            androidDefaultUEH.uncaughtException(thread, ex);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         // set up the page
         super.onCreate(savedInstanceState);
+
+        androidDefaultUEH = Thread.getDefaultUncaughtExceptionHandler();
+        Thread.setDefaultUncaughtExceptionHandler(handler);
+
         setContentView(R.layout.activity_main);
 
         // allow the start plan button to get the start plan page
@@ -34,9 +46,14 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view)
             {
-                Log.i("Main Activity", "creating the get store activity page");
-                Intent getsecondpage = new Intent(MainActivity.this, GetStoreActivity.class);
-                startActivity(getsecondpage);
+                try{
+                    Log.i("Main Activity", "creating the get store activity page");
+                    Intent getsecondpage = new Intent(MainActivity.this, GetStoreActivity.class);
+                    startActivity(getsecondpage);
+                }
+                catch(Exception e){
+                    Log.e("Result Activity", e.toString());
+                }
             }});
 
         // allow the view plan button to get to the page with made plan
@@ -46,10 +63,14 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view)
             {
-                Log.i("Main Activity", "creating the result activity page");
-                Intent getFinalPage = new Intent(MainActivity.this, ResultActivity.class);
-                startActivity(getFinalPage);
-
+                try{
+                    Log.i("Main Activity", "creating the result activity page");
+                    Intent getFinalPage = new Intent(MainActivity.this, ResultActivity.class);
+                    startActivity(getFinalPage);
+                }
+                catch(Exception e){
+                    Log.e("Result Activity", e.toString());
+                }
             }});
 
         // tell the user it is not implemented yet when the history button clicked
@@ -59,8 +80,13 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view)
             {
-                Log.i("Main Activity", "informing the user that history is not implemented yet");
-                Toast.makeText(getApplicationContext(),"Coming soon...",Toast.LENGTH_SHORT).show();
+                try{
+                    Log.i("Main Activity", "informing the user that history is not implemented yet");
+                    Toast.makeText(getApplicationContext(),"Coming soon...",Toast.LENGTH_SHORT).show();
+                }
+                catch(Exception e){
+                    Log.e("Result Activity", e.toString());
+                }
             }});
     }
 }
