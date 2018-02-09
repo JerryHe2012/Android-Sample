@@ -3,6 +3,7 @@
  * PROGRAMMER   : Jerry He, Kevin Park, Adam Sosnowski, Yingqi Li
  * DATE         : 2018 - 2 - 9
  * DESCRIPTION  : This file handles logic behind GetStoreActivity asking user to select date and store.
+ *
  */
 
 package com.example.hpark4435.a01;
