@@ -49,7 +49,6 @@ public class DetailActivity extends Activity {
             @Override
             public void onClick(View view)
             {
-
                 int totalLine = 0;
                 totalLine = grocery.getNumberOfItem();
                 grocery.setQuantity(totalLine);
@@ -145,8 +144,18 @@ public class DetailActivity extends Activity {
                     }
                 });
 
+                newItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Take action.
+
+                    }
+                });
+
                 totalLine++;
-                grocery.setNumberOfItem(totalLine);
+                int totalItem = grocery.getNumberOfItem();
+                grocery.setNumberOfItem(totalItem + 1);
+                grocery.setActualTotalLine(totalLine);
                // totalLine = 1 + grocery.getNumberOfItem();
                 //grocery.setNumberOfItem(totalLine);
 
