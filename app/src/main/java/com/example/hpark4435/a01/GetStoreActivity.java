@@ -1,8 +1,16 @@
+/* FILE         : GetStoreActivity.java
+ * PROG         : PROG3150 - A01
+ * PROGRAMMER   : Jerry He, Kevin Park, Adam Sosnowski, Yingqi Li
+ * DATE         : 2018 - 2 - 9
+ * DESCRIPTION  : This file handles logic behind GetStoreActivity asking user to select date and store.
+ */
+
 package com.example.hpark4435.a01;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,6 +33,7 @@ public class GetStoreActivity extends Activity {
             @Override
             public void onClick(View view)
             {
+                Log.i("GetStoreActivity", "Choose Item clicked");
                 Spinner theSpinner = (Spinner)findViewById(R.id.spinner);
                 String theStore = theSpinner.getSelectedItem().toString();
                 grocery.setStoreName(theStore);

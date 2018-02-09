@@ -1,7 +1,10 @@
 package com.example.hpark4435.a01;
 
-/**
- * Created by yli7861 on 2/8/2018.
+/* FILE         : GroceryItem.java
+ * PROG         : PROG3150 - A01
+ * PROGRAMMER   : Jerry He, Kevin Park, Adam Sosnowski, Yingqi Li
+ * DATE         : 2018 - 2 - 9
+ * DESCRIPTION  : This class is used to encapsulate attributes and behaviours of a shopping item.
  */
 
 public class GroceryItem {

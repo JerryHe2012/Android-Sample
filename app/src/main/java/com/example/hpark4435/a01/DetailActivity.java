@@ -63,6 +63,7 @@ public class DetailActivity extends Activity {
 
                 final EditText newItem = new EditText(theRow.getContext());
                 newItem.setLayoutParams(new TableRow.LayoutParams(thewight, TableRow.LayoutParams.WRAP_CONTENT));
+                newItem.setSingleLine(true);
                 newItem.setId((totalLine * 6) + 1);
                 newItem.setText("New Item");
                 theRow.addView(newItem);
@@ -173,14 +174,26 @@ public class DetailActivity extends Activity {
             {
                 Log.i("Detail Activity", "User clicked on save plan");
                 int totalLine = grocery.getActualTotalLine();
+
+                // build new plan
+                GroceryPlan newPlan = new GroceryPlan();
+                newPlan.setDate(grocery.getDate());
+
                 for (int i = 0; i < totalLine; i++)
                 {
                     if (grocery.getQunatity(i) != 0)
                     {
                         TextView theCount = (TextView) findViewById((i * 6) + 1);
                         grocery.setItemName(theCount.getText().toString(), i);
+
+                        GroceryItem newItem = new GroceryItem(grocery.getItemName(i), grocery.getQunatity(i));
+                        newPlan.addItem(newItem);
                     }
                 }
+
+                // add new plan to the list
+                grocery.addPlan(newPlan);
+                
                 Intent getfinalpage = new Intent(DetailActivity.this, ResultActivity.class);
                 startActivity(getfinalpage);
             }});

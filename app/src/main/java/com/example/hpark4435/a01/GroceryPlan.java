@@ -4,14 +4,17 @@ import java.util.List;
 import java.time.LocalDate;
 
 
-/**
- * Created by yli7861 on 2/8/2018.
+/* FILE         : GroceryPlan.java
+ * PROG         : PROG3150 - A01
+ * PROGRAMMER   : Jerry He, Kevin Park, Adam Sosnowski, Yingqi Li
+ * DATE         : 2018 - 2 - 9
+ * DESCRIPTION  : This class is used to encapsulate attributes and behaviour of a grocery plan.
  */
 
 public class GroceryPlan {
     private List<GroceryItem> itemList;
     private String store;
-    private LocalDate date;
+    private String date;
     private int numOfItems;
     private int numUnchecked;
 
@@ -22,13 +25,13 @@ public class GroceryPlan {
     }
 
     public String getStoreName() {return store;}
-    public LocalDate getDate () {return date;}
+    public String getDate () {return date;}
     public int getNumOfItems () {return numOfItems;}
     public int getNumUnchecked() {return numUnchecked;}
     public GroceryItem getItem(int index) {return itemList.get(index);}
 
     public void setStoreName(String newStore) {store = newStore;}
-    public void setDate (LocalDate newDate) {date = newDate;}
+    public void setDate (String newDate) {date = newDate;}
 
     public void addItem(GroceryItem newItem){
         itemList.add(newItem);
