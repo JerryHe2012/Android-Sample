@@ -4,6 +4,19 @@
     <string name="check_plan">Check Plan</string>
     <string name="history">History</string>
 
+    <string-array name="store_url">
+        <item>https://www.zehrs.ca/</item>
+        <item>https://www.realcanadiansuperstore.ca/</item>
+        <item>http://freshco.com/</item>
+        <item>https://www.foodbasics.ca/</item>
+        <item>https://www.nofrills.ca/</item>
+        <item>https://www1.shoppersdrugmart.ca/en/Home</item>
+        <item>https://www.costco.ca/</item>
+        <item>https://www.sobeys.com/en/</item>
+        <item>https://www.gianttiger.com/</item>
+        <item>https://www.metro.ca/en</item>
+    </string-array>
+
     <string-array name="store_name">
         <item>Zehrs</item>
         <item>Real Canadian Super Store</item>
@@ -14,7 +27,6 @@
         <item>Coscto</item>
         <item>Sobeys</item>
         <item>Giant Tiger</item>
-        <item>Euro Food</item>
         <item>Metro</item>
     </string-array>
 </resources>
