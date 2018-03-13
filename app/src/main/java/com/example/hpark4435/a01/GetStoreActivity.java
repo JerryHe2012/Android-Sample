@@ -13,9 +13,12 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class GetStoreActivity extends Activity {
     public Button btn_ChooseItem;
@@ -27,6 +30,26 @@ public class GetStoreActivity extends Activity {
         setContentView(R.layout.activity_get_store);
 
         final GrocerySingleton grocery = GrocerySingleton.getInstance();
+
+        String[] stores = getResources().getStringArray(R.array.store_name);
+
+        Spinner theSpinner = (Spinner)findViewById(R.id.spinner);
+        final CustomSpinnerAdapter spinnerAdapter = new CustomSpinnerAdapter(this, stores);
+        theSpinner.setAdapter(spinnerAdapter);
+        theSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView description = (TextView)findViewById(R.id.textView2);
+                description.setText(spinnerAdapter.getItem(i) + "description");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                TextView description = (TextView)findViewById(R.id.textView2);
+                description.setText("");
+            }
+        });
+
 
         btn_ChooseItem = (Button)findViewById(R.id.btn_ChooseItem);
         btn_ChooseItem.setOnClickListener(new View.OnClickListener()
@@ -50,5 +73,4 @@ public class GetStoreActivity extends Activity {
                 }
             }});
     }
-
 }
