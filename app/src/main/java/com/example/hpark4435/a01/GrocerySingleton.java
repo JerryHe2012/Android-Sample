@@ -28,7 +28,7 @@ public class GrocerySingleton {
     private int NumberOfItem;                                   // Number of total item list
     private int actualTotalLine;                                // Total line in the android screen.
     private int checkQuantity;                                  // How many items that user found in the store.
-
+    private int itemID;
 
 
     /* METHOD       : getInstance
@@ -51,6 +51,16 @@ public class GrocerySingleton {
         planList = new ArrayList<>();
         numberOfPlans = 0;
     } // By using this, no outer class can initialize this class's object
+
+
+
+    public GrocerySingleton(int itemID, String name, int Quantity) {
+        this.itemID = itemID;
+        this.itemName[NumberOfItem] = name;
+        this.itemQuantity[NumberOfItem] = Quantity;
+
+    } // By using this, no outer class can initialize this class's object
+
 
 
     /* METHOD       : addPlan
@@ -76,7 +86,7 @@ public class GrocerySingleton {
     public String getStoreName() {return storeName; }              // getStoreName mutator  : Used for getting the name of the store.
     public int getCheckQuantity() {return  checkQuantity; }        // getCheckQuantity mutator: used for getting the checkQuantity value.
     public int getActualTotalLine() {return actualTotalLine;}      // getActualTotalLine mutator: getting actualTotalLine value.
-
+    public int getItemID(){return itemID;}
 
     public void setNumberOfItem(int numItem)
     {

@@ -10,17 +10,22 @@ package com.example.hpark4435.a01;
 public class GroceryItem {
     private String itemName;
     private int itemQuantity;
+    private int itemID;
     private boolean checkStatus;
 
-    public GroceryItem(String newName, int newQuantity) {
+    public GroceryItem(int id, String newName, int newQuantity) {
+        itemID = id;
         itemName = newName;
         itemQuantity = newQuantity;
         checkStatus = false;
     }
 
+    public int getItemID(){return itemID;}
     public String getItemName(){return itemName;}
     public int getItemQuantity(){return itemQuantity;}
     public boolean isChecked(){return checkStatus;}
+
+    public void setItemID(int newItemID){ itemID = newItemID;}
 
     public void setItemName(String newName){
         itemName = newName;

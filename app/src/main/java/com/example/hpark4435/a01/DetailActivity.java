@@ -5,18 +5,12 @@ package com.example.hpark4435.a01;
 //Description: This application will act as a grocery planner/list that a user will be able to use while grocery shopping. It is designed to be simple and easy to use
 //This particular file will contain the logic and code user to save items to the singleton class. Here, a user will be able to create/delete/edit new items for their grocery list.
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -38,6 +32,9 @@ public class DetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+
+        final DataBase db = new DataBase(this);
+        final StringBuilder sb = new StringBuilder();
 
 
         final TableLayout theLayout = (TableLayout)findViewById(R.id.LLgoods);
@@ -219,8 +216,13 @@ public class DetailActivity extends Activity {
                             TextView theCount = (TextView) findViewById((i * 6) + 1);
                             grocery.setItemName(theCount.getText().toString(), i);
 
-                            GroceryItem newItem = new GroceryItem(grocery.getItemName(i), grocery.getQunatity(i));
+                            GroceryItem newItem = new GroceryItem(i+1,grocery.getItemName(i), grocery.getQunatity(i));
                             newPlan.addItem(newItem);
+                            long insertId = db.insertTask(newItem);
+                            if (insertId > 0) {
+                                sb.append("Row inserted! Insert Id: " + insertId + "\n");
+                                Toast.makeText(getApplicationContext(),"Saved to DB",Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
 
