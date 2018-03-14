@@ -18,6 +18,20 @@ public class DataBase {
     public static final String DB_NAME = "Grocery.db";
     public static final int    DB_VERSION = 1;
 
+    //Grocery list constants
+    public static final String LIST_TABLE = "GroceryList";
+
+    public static final String LIST_ID = "ListID";
+    public static final int    LIST_ID_COL = 0;
+
+    public static final String LIST_ITEMS = "totalItems";
+    public static final int    LIST_ITEMS_COL = 1;
+
+    public static final String LIST_DATE = "Date";
+    public static final int    LIST_DATE_COL = 2;
+
+    public static final String LIST_STOREID = "StoreID";
+    public static final int    LIST_STOREID_COL = 3;
 
 
     //Store table constants
@@ -54,11 +68,15 @@ public class DataBase {
     public static final int    PRODUCT_CHECK_COL = 4;
 
 
+
+
+
     // CREATE and DROP TABLE statements
     public static final String CREATE_PRODUCT_TABLE =
-            "CREATE TABLE " + PRODUCT_TABLE + " (" +
+            "CREATE TABLE [IF NOT EXISTS] " + PRODUCT_TABLE + " (" +
                     PRODUCT_ID   + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    PLIST_ID     + " INTEGER FOREIGN KEY NOT NULL, " +
+                    PLIST_ID     + " INTEGER FOREIGN KEY NOT NULL," +
+                    " FOREIGN KEY ("+PLIST_ID+") REFERENCES "+LIST_TABLE+"("+LIST_ID+"), " +
                     PRODUCT_NAME + " TEXT    NOT NULL UNIQUE, "     +
                     PRODUCT_QUANTITY + " INTEGER     NOT NULL, " +
                     PRODUCT_CHECK +" BOOLEAN    NOT NULL)";
@@ -69,13 +87,27 @@ public class DataBase {
 
     // CREATE and DROP TABLE statements
     public static final String CREATE_STORE_TABLE =
-            "CREATE TABLE [IF NOT EXISTS]" + STORE_TABLE + " (" +
+            "CREATE TABLE [IF NOT EXISTS] " + STORE_TABLE + " (" +
                     STORE_ID   + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     STORE_NAME     + "TEXT NOT NULL, " +
                     STORE_URL +" TEXT    NOT NULL)";
 
     public static final String DROP_STORE_TABLE =
             "DROP TABLE IF EXISTS " + STORE_TABLE;
+
+
+
+
+    // CREATE and DROP TABLE statements
+    public static final String CREATE_LIST_TABLE =
+            "CREATE TABLE [IF NOT EXISTS] " + LIST_TABLE + " (" +
+                    LIST_ID   + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    LIST_ITEMS + " INTEGER   NOT NULL, " +
+                    LIST_DATE     + " TEXT NOT NULL, " +
+                    LIST_STOREID +" INT    NOT NULL)";
+
+    public static final String DROP_LIST_TABLE =
+            "DROP TABLE IF EXISTS " + LIST_TABLE;
 
 
 
@@ -91,6 +123,7 @@ public class DataBase {
         @Override
         public void onCreate(SQLiteDatabase db) {
             // create tables
+            db.execSQL(CREATE_LIST_TABLE);                      //Create tables not working
             db.execSQL(CREATE_PRODUCT_TABLE);
             db.execSQL(CREATE_STORE_TABLE);
             //db.execSQL(CREATE_TASK_TABLE);
@@ -111,6 +144,7 @@ public class DataBase {
 
             db.execSQL(DataBase.DROP_PRODUCT_TABLE);
             db.execSQL(DataBase.DROP_STORE_TABLE);
+            db.execSQL(DataBase.DROP_LIST_TABLE);
             onCreate(db);
         }
     }
@@ -199,6 +233,26 @@ public class DataBase {
 
 
     }
+
+
+    //insert stores
+    public long insertStore(int id, String name, String URL) {
+        ContentValues cv = new ContentValues();
+        cv.put(STORE_ID, id);
+        cv.put(STORE_NAME, name);
+        cv.put(STORE_URL, URL);
+
+
+
+        this.openWriteableDB(); //Crashes here
+        long rowID = db.insert(STORE_TABLE, null, cv);
+        this.closeDB();
+        return rowID;
+
+
+    }
+
+
 
     public int updateTask(GrocerySingleton task) {
         ContentValues cv = new ContentValues();

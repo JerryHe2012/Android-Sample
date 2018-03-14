@@ -40,10 +40,31 @@ public class GetStoreActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_store);
 
+
         final GrocerySingleton grocery = GrocerySingleton.getInstance();
 
         final String[] stores = getResources().getStringArray(R.array.store_name);
+        String[] storesURL2 = getResources().getStringArray(R.array.store_url);
 
+
+       // DataBase db = new DataBase(this);
+       // StringBuilder sb = new StringBuilder();
+//        long insertId;
+//        try {
+//
+//
+//            for (int i = 0; i < stores.length; i++) {
+//                insertId = db.insertStore(i + 1, stores[i], storesURL2[i]);
+//                if (insertId > 0) {
+//                    sb.append("Row inserted! Insert Id: " + insertId + "\n");
+//                    Toast.makeText(getApplicationContext(), "Saved to DB", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//        catch(Exception e)
+//        {
+//            Log.e("Result Activity", e.toString());
+//        }
 
         Spinner theSpinner = (Spinner)findViewById(R.id.spinner);
         final CustomSpinnerAdapter spinnerAdapter = new CustomSpinnerAdapter(this, stores);
@@ -58,6 +79,7 @@ public class GetStoreActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         String[] storesURL = getResources().getStringArray(R.array.store_url);
+
                         String link = storesURL[i];
                         Uri viewUri = Uri.parse(link);
                         Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewUri);
