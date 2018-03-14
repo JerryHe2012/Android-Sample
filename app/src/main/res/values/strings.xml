@@ -29,4 +29,19 @@
         <item>Giant Tiger</item>
         <item>Metro</item>
     </string-array>
+
+
+
+    <string-array name="storefile_name">
+        <item>Zehrs.txt</item>
+        <item>Real_Canadian_Super_Store.txt</item>
+        <item>FreshCo.txt</item>
+        <item>Food_Basics.txt</item>
+        <item>No_Frills.txt</item>
+        <item>Shoppers_Drugmart.txt</item>
+        <item>Coscto.txt</item>
+        <item>Sobeys.txt</item>
+        <item>Giant_Tiger.txt</item>
+        <item>Metro.txt</item>
+    </string-array>
 </resources>

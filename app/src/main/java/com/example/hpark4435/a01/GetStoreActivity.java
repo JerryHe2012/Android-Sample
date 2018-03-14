@@ -9,7 +9,9 @@
 package com.example.hpark4435.a01;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -20,6 +22,14 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class GetStoreActivity extends Activity {
     public Button btn_ChooseItem;
@@ -33,7 +43,7 @@ public class GetStoreActivity extends Activity {
         final GrocerySingleton grocery = GrocerySingleton.getInstance();
 
         final String[] stores = getResources().getStringArray(R.array.store_name);
-        final String[] storesURL = getResources().getStringArray(R.array.store_url);
+
 
         Spinner theSpinner = (Spinner)findViewById(R.id.spinner);
         final CustomSpinnerAdapter spinnerAdapter = new CustomSpinnerAdapter(this, stores);
@@ -41,12 +51,14 @@ public class GetStoreActivity extends Activity {
         theSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, final int i, long l) {
+                SyncCheck syns = new SyncCheck();
+                syns.execute(new Integer[] {i});
                 TextView description = (TextView)findViewById(R.id.textView2);
-                description.setText(storesURL[i]);
                 description.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String link = getIntent().getStringExtra(storesURL[i]);
+                        String[] storesURL = getResources().getStringArray(R.array.store_url);
+                        String link = storesURL[i];
                         Uri viewUri = Uri.parse(link);
                         Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewUri);
                         startActivity(viewIntent);
@@ -83,5 +95,65 @@ public class GetStoreActivity extends Activity {
                     Log.e("Result Activity", e.toString());
                 }
             }});
+    }
+    public class SyncCheck extends AsyncTask<Integer, Void, String>
+    {
+
+        BufferedReader br = null;
+        StringBuilder sb = null;
+        @Override
+        protected String doInBackground(Integer... ints) {
+            String[] stores = getResources().getStringArray(R.array.storefile_name);
+            final String[] storesURL = getResources().getStringArray(R.array.store_url);
+
+            final int numStore = (int)ints[0];        // Number of the store
+            String selectedStore = stores[numStore]; // Name of the store file.
+            String s = "";
+            try{
+                InputStream is = getAssets().open(selectedStore);
+                br = new BufferedReader(new InputStreamReader(is));
+                sb = new StringBuilder();
+
+
+                String line;
+                while((line= br.readLine()) != null)
+                {
+                    sb.append(line);
+                }
+
+
+                is.close();
+
+            }catch  (IOException ioe)
+            {
+                ioe.fillInStackTrace();
+            }
+
+            return sb.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            new SyncUpdate().execute(new String[] {result});
+        }
+    }
+
+    public class SyncUpdate extends AsyncTask<String, Void, Void>
+    {
+
+
+        @Override
+        protected Void doInBackground(String... strs) {
+            final String[] storesURL = getResources().getStringArray(R.array.store_url);
+            final String StoreDescription = strs[0];
+
+            Spinner theSpinner = (Spinner)findViewById(R.id.spinner);
+            final int index = theSpinner.getSelectedItemPosition();
+
+            TextView description = (TextView)findViewById(R.id.textView2);
+            description.setText(StoreDescription + storesURL[index]);
+
+            return null;
+        }
     }
 }
