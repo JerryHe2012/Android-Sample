@@ -1,9 +1,9 @@
 /* FILE         : GetStoreActivity.java
- * PROG         : PROG3150 - A01
+ * PROG         : PROG3150 - A02
  * PROGRAMMER   : Jerry He, Kevin Park, Adam Sosnowski, Yingqi Li
- * DATE         : 2018 - 2 - 9
+ * DATE         : 2018 - 3 - 14
  * DESCRIPTION  : This file handles logic behind GetStoreActivity asking user to select date and store.
- *
+ *              It also shows explanation of store and link to selected store.
  */
 
 package com.example.hpark4435.a01;
@@ -51,7 +51,7 @@ public class GetStoreActivity extends Activity {
         theSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, final int i, long l) {
-                SyncCheck syns = new SyncCheck();
+                AsyncStore syns = new AsyncStore();
                 syns.execute(new Integer[] {i});
                 TextView description = (TextView)findViewById(R.id.textView2);
                 description.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +96,14 @@ public class GetStoreActivity extends Activity {
                 }
             }});
     }
-    public class SyncCheck extends AsyncTask<Integer, Void, String>
+
+
+
+    /* CLASS        : AsyncStore
+       SUBCLASS     : AsyncTask<Integer,Void,String>
+       DESCRIPTION  : This
+     */
+    public class AsyncStore extends AsyncTask<Integer, Void, String>
     {
 
         BufferedReader br = null;
@@ -134,25 +141,40 @@ public class GetStoreActivity extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
-            new SyncUpdate().execute(new String[] {result});
+            // Calling getURL class in order to allow user to go to website.
+            new getURL().execute(new String[] {result});
         }
     }
 
-    public class SyncUpdate extends AsyncTask<String, Void, String>
+    /* CLASS    : getURL
+      DESCRIPTION: This class is used for getting URL address and allow user goes to specific website.
+                It is possible because this class is using subclass called AsnycTask with its override method.
+     */
+    public class getURL extends AsyncTask<String, Void, String>
     {
 
-
+        /* METHOD       : doInBackground method
+           PARAMETER    : String type strs - Getting store's url address.
+           RETURN       : String - Description with URL link.
+           DESCRIPTION  : This method returns whole explanation and URL of specific store.
+         */
         @Override
         protected String doInBackground(String... strs) {
             String[] storesURL = getResources().getStringArray(R.array.store_url);
-            String StoreDescription = strs[0];
+            String StoreDescription = strs[0];                          // Store description getting from parameter strs
+            Spinner theSpinner = (Spinner)findViewById(R.id.spinner);   // Spinner object
+            int index = theSpinner.getSelectedItemPosition();           // Index number of selected store.
 
-            Spinner theSpinner = (Spinner)findViewById(R.id.spinner);
-            int index = theSpinner.getSelectedItemPosition();
-
-            return (StoreDescription + storesURL[index]);
+            String StrLinkedToHere = "More Information, click link below.\n";
+            return (StoreDescription + "\n\n" + StrLinkedToHere + storesURL[index]);
         }
 
+
+        /* METHOD       : onPostExecute
+           PARAMETER    : String result - Getting return value from doInBackground method.
+           RETURN       : None
+           DESCRIPTION  : This method is used for displaying store's information into textView2.
+         */
         @Override
         protected void onPostExecute(String result) {
             TextView description = (TextView)findViewById(R.id.textView2);
