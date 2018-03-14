@@ -138,22 +138,25 @@ public class GetStoreActivity extends Activity {
         }
     }
 
-    public class SyncUpdate extends AsyncTask<String, Void, Void>
+    public class SyncUpdate extends AsyncTask<String, Void, String>
     {
 
 
         @Override
-        protected Void doInBackground(String... strs) {
-            final String[] storesURL = getResources().getStringArray(R.array.store_url);
-            final String StoreDescription = strs[0];
+        protected String doInBackground(String... strs) {
+            String[] storesURL = getResources().getStringArray(R.array.store_url);
+            String StoreDescription = strs[0];
 
             Spinner theSpinner = (Spinner)findViewById(R.id.spinner);
-            final int index = theSpinner.getSelectedItemPosition();
+            int index = theSpinner.getSelectedItemPosition();
 
+            return (StoreDescription + storesURL[index]);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
             TextView description = (TextView)findViewById(R.id.textView2);
-            description.setText(StoreDescription + storesURL[index]);
-
-            return null;
+            description.setText(result);
         }
     }
 }
