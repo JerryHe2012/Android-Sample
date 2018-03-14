@@ -137,7 +137,7 @@ public class DataBase {
         else {
             try {
                 GrocerySingleton task = new GrocerySingleton(
-                        cursor.getInt(PRODUCT_ID_COL),             
+                        cursor.getInt(PRODUCT_ID_COL),
                         cursor.getString(PRODUCT_NAME_COL),
                         cursor.getInt(PRODUCT_QUANTITY_COL));
                 return task;
