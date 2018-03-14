@@ -12,11 +12,13 @@ package com.example.hpark4435.a01;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -25,6 +27,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 public class ResultActivity extends Activity {
+
+    public Button btn_GoFirstScreen;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,5 +146,21 @@ public class ResultActivity extends Activity {
                 });
             }
         }
+
+        btn_GoFirstScreen = (Button) findViewById(R.id.btn_GoingFirstPage);
+        btn_GoFirstScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    Log.i("Result Activity", "Clicking Button for Going the first page. ");
+                    Intent GoBackFirst = new Intent(ResultActivity.this, MainActivity.class);
+                    startActivity(GoBackFirst);
+                }catch(Exception ex)
+                {
+                    Log.e("Result Activity", ex.toString());
+                }
+            }
+        });
+
     }
 }

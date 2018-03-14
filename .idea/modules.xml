@@ -2,15 +2,17 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Android-A01.iml" filepath="$PROJECT_DIR$/.idea/Android-A01.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Android-A01.iml" filepath="$PROJECT_DIR$/Android-A01.iml" />
       <module fileurl="file://C:\Users\Hpark4435\Desktop\nanananna\2\Android-A01\.idea\Android-A01.iml" filepath="C:\Users\Hpark4435\Desktop\nanananna\2\Android-A01\.idea\Android-A01.iml" />
-      <module fileurl="file://C:\Users\asosnowski1197\AndroidStudioProjects\Android-A01\Android-A01.iml" filepath="C:\Users\asosnowski1197\AndroidStudioProjects\Android-A01\Android-A01.iml" />
       <module fileurl="file://C:\Users\sosno\Desktop\MAD_A1\Android-A01\Android-A01.iml" filepath="C:\Users\sosno\Desktop\MAD_A1\Android-A01\Android-A01.iml" />
+      <module fileurl="file://C:\Users\Hpark4435\Desktop\a\Android-A01\.idea\Android-A01.iml" filepath="C:\Users\Hpark4435\Desktop\a\Android-A01\.idea\Android-A01.iml" />
+      <module fileurl="file://C:\Users\asosnowski1197\AndroidStudioProjects\Android-A01\Android-A01.iml" filepath="C:\Users\asosnowski1197\AndroidStudioProjects\Android-A01\Android-A01.iml" />
       <module fileurl="file://C:\Users\sosno\Desktop\MAD2\Android-A01\Android-A01.iml" filepath="C:\Users\sosno\Desktop\MAD2\Android-A01\Android-A01.iml" />
       <module fileurl="file://C:\Users\Hpark4435\AndroidStudioProjects\Android-A01\.idea\Android-A01.iml" filepath="C:\Users\Hpark4435\AndroidStudioProjects\Android-A01\.idea\Android-A01.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\asosnowski1197\AndroidStudioProjects\Android-A01\app\app.iml" filepath="C:\Users\asosnowski1197\AndroidStudioProjects\Android-A01\app\app.iml" />
       <module fileurl="file://C:\Users\Hpark4435\Desktop\nanananna\2\Android-A01\app\app.iml" filepath="C:\Users\Hpark4435\Desktop\nanananna\2\Android-A01\app\app.iml" />
+      <module fileurl="file://C:\Users\Hpark4435\Desktop\a\Android-A01\app\app.iml" filepath="C:\Users\Hpark4435\Desktop\a\Android-A01\app\app.iml" />
+      <module fileurl="file://C:\Users\asosnowski1197\AndroidStudioProjects\Android-A01\app\app.iml" filepath="C:\Users\asosnowski1197\AndroidStudioProjects\Android-A01\app\app.iml" />
     </modules>
   </component>
 </project>
