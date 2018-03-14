@@ -11,9 +11,10 @@ public class GroceryItem {
     private String itemName;
     private int itemQuantity;
     private int itemID;
+    private int listID;
     private boolean checkStatus;
 
-    public GroceryItem(int id, String newName, int newQuantity) {
+    public GroceryItem(int id, int ListID, String newName, int newQuantity) {
         itemID = id;
         itemName = newName;
         itemQuantity = newQuantity;
@@ -21,11 +22,14 @@ public class GroceryItem {
     }
 
     public int getItemID(){return itemID;}
+    public int getListID(){return listID;}
     public String getItemName(){return itemName;}
     public int getItemQuantity(){return itemQuantity;}
     public boolean isChecked(){return checkStatus;}
 
     public void setItemID(int newItemID){ itemID = newItemID;}
+
+    public void setListID(int newListID){ listID = newListID;}
 
     public void setItemName(String newName){
         itemName = newName;

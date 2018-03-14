@@ -216,7 +216,7 @@ public class DetailActivity extends Activity {
                             TextView theCount = (TextView) findViewById((i * 6) + 1);
                             grocery.setItemName(theCount.getText().toString(), i);
 
-                            GroceryItem newItem = new GroceryItem(i+1,grocery.getItemName(i), grocery.getQunatity(i));
+                            GroceryItem newItem = new GroceryItem(i+1,1,grocery.getItemName(i), grocery.getQunatity(i));
                             newPlan.addItem(newItem);
                             long insertId = db.insertTask(newItem);
                             if (insertId > 0) {

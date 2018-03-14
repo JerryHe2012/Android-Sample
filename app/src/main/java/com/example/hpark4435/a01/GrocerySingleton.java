@@ -29,6 +29,8 @@ public class GrocerySingleton {
     private int actualTotalLine;                                // Total line in the android screen.
     private int checkQuantity;                                  // How many items that user found in the store.
     private int itemID;
+    private int listID;
+    private int isChecked;
 
 
     /* METHOD       : getInstance
@@ -54,10 +56,12 @@ public class GrocerySingleton {
 
 
 
-    public GrocerySingleton(int itemID, String name, int Quantity) {
+    public GrocerySingleton(int itemID, int ListID, String name, int Quantity, int isCheck) {
         this.itemID = itemID;
+        this.listID = ListID;
         this.itemName[NumberOfItem] = name;
         this.itemQuantity[NumberOfItem] = Quantity;
+        this.isChecked = isCheck;
 
     } // By using this, no outer class can initialize this class's object
 
