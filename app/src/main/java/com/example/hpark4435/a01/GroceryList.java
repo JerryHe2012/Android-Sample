@@ -30,5 +30,12 @@ public class GroceryList {
     public int getListId() { return listId; }
     public void setListId(int listId) { this.listId = listId; }
 
-    public
+    public int getNumOfItems() { return numOfItems; }
+    public void setNumOfItems(int numOfItems) { this.numOfItems = numOfItems; }
+
+    public int getStoreId() {return  storeId;}
+    public void setStoreId(int storeId) { this.storeId = storeId; }
+
+    public String getDate() { return date; }
+    public void setDate(String date) { this.date = date; }
 }
