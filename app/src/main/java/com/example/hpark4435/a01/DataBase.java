@@ -30,7 +30,7 @@ public class DataBase {
     public static final String LIST_DATE = "Date";
     public static final int    LIST_DATE_COL = 2;
 
-    public static final String LIST_STOREID = "StoreID";
+    public static final String LIST_STOREID = "StoreID"; // foreign key
     public static final int    LIST_STOREID_COL = 3;
 
 
@@ -71,26 +71,26 @@ public class DataBase {
 
 
 
-    // CREATE and DROP TABLE statements
+    // CREATE and DROP TABLE statements - PRODUCT
     public static final String CREATE_PRODUCT_TABLE =
             "CREATE TABLE [IF NOT EXISTS] " + PRODUCT_TABLE + " (" +
                     PRODUCT_ID   + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    PLIST_ID     + " INTEGER FOREIGN KEY NOT NULL," +
-                    " FOREIGN KEY ("+PLIST_ID+") REFERENCES "+LIST_TABLE+"("+LIST_ID+"), " +
-                    PRODUCT_NAME + " TEXT    NOT NULL UNIQUE, "     +
-                    PRODUCT_QUANTITY + " INTEGER     NOT NULL, " +
-                    PRODUCT_CHECK +" BOOLEAN    NOT NULL)";
+                    PLIST_ID     + " INTEGER NOT NULL," +
+                    PRODUCT_NAME + " TEXT NOT NULL , "     +
+                    PRODUCT_QUANTITY + " INTEGER NOT NULL, " +
+                    PRODUCT_CHECK +" INTEGER NOT NULL," +
+                    " FOREIGN KEY ("+PLIST_ID+") REFERENCES "+LIST_TABLE+"("+LIST_ID+")) ";
 
     public static final String DROP_PRODUCT_TABLE =
             "DROP TABLE IF EXISTS " + PRODUCT_TABLE;
 
 
-    // CREATE and DROP TABLE statements
+    // CREATE and DROP TABLE statements - STORE
     public static final String CREATE_STORE_TABLE =
             "CREATE TABLE [IF NOT EXISTS] " + STORE_TABLE + " (" +
                     STORE_ID   + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    STORE_NAME     + "TEXT NOT NULL, " +
-                    STORE_URL +" TEXT    NOT NULL)";
+                    STORE_NAME     + " TEXT NOT NULL, " +
+                    STORE_URL +" TEXT NOT NULL)";
 
     public static final String DROP_STORE_TABLE =
             "DROP TABLE IF EXISTS " + STORE_TABLE;
@@ -98,13 +98,14 @@ public class DataBase {
 
 
 
-    // CREATE and DROP TABLE statements
+    // CREATE and DROP TABLE statements - LIST
     public static final String CREATE_LIST_TABLE =
             "CREATE TABLE [IF NOT EXISTS] " + LIST_TABLE + " (" +
                     LIST_ID   + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    LIST_ITEMS + " INTEGER   NOT NULL, " +
+                    LIST_ITEMS + " INTEGER NOT NULL, " +
                     LIST_DATE     + " TEXT NOT NULL, " +
-                    LIST_STOREID +" INT    NOT NULL)";
+                    LIST_STOREID +" INTEGER NOT NULL," +
+                    " FOREIGN KEY ("+LIST_STOREID+") REFERENCES "+STORE_TABLE+"("+STORE_ID+"))";
 
     public static final String DROP_LIST_TABLE =
             "DROP TABLE IF EXISTS " + LIST_TABLE;
@@ -123,9 +124,9 @@ public class DataBase {
         @Override
         public void onCreate(SQLiteDatabase db) {
             // create tables
-            db.execSQL(CREATE_LIST_TABLE);                      //Create tables not working
-            db.execSQL(CREATE_PRODUCT_TABLE);
             db.execSQL(CREATE_STORE_TABLE);
+            db.execSQL(CREATE_LIST_TABLE);
+            db.execSQL(CREATE_PRODUCT_TABLE);
             //db.execSQL(CREATE_TASK_TABLE);
 
             // insert default lists
@@ -139,7 +140,7 @@ public class DataBase {
         public void onUpgrade(SQLiteDatabase db,
                               int oldVersion, int newVersion) {
 
-            Log.d("Task list", "Upgrading db from version "
+            Log.d("Grocery List", "Upgrading db from version "
                     + oldVersion + " to " + newVersion);
 
             db.execSQL(DataBase.DROP_PRODUCT_TABLE);
@@ -165,7 +166,7 @@ public class DataBase {
         db = dbHelper.getReadableDatabase();
     }
 
-    private void openWriteableDB() {
+    private void openWritableDB() {
         db = dbHelper.getWritableDatabase();
     }
 
@@ -226,7 +227,7 @@ public class DataBase {
         cv.put(PRODUCT_CHECK, task.isChecked());
 
 
-        this.openWriteableDB(); //Crashes here
+        this.openWritableDB(); //Crashes here
         long rowID = db.insert(PRODUCT_TABLE, null, cv);
         this.closeDB();
         return rowID;
@@ -244,7 +245,7 @@ public class DataBase {
 
 
 
-        this.openWriteableDB(); //Crashes here
+        this.openWritableDB(); //Crashes here
         long rowID = db.insert(STORE_TABLE, null, cv);
         this.closeDB();
         return rowID;
@@ -265,7 +266,7 @@ public class DataBase {
         String where = PRODUCT_ID + "= ?";
         String[] whereArgs = { String.valueOf(task.getNumberOfPlans()) }; //Is number of plans correct?
 
-        this.openWriteableDB();
+        this.openWritableDB();
         int rowCount = db.update(PRODUCT_TABLE, cv, where, whereArgs);
         this.closeDB();
 
@@ -276,7 +277,7 @@ public class DataBase {
         String where = PRODUCT_ID + "= ?";
         String[] whereArgs = { String.valueOf(id) };
 
-        this.openWriteableDB();
+        this.openWritableDB();
         int rowCount = db.delete(PRODUCT_TABLE, where, whereArgs);
         this.closeDB();
 
