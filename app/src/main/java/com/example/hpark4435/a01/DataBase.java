@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 /**
  * Created by sosno on 2018-03-13.
  */
@@ -88,7 +90,7 @@ public class DataBase {
     // CREATE and DROP TABLE statements - STORE
     public static final String CREATE_STORE_TABLE =
             "CREATE TABLE [IF NOT EXISTS] " + STORE_TABLE + " (" +
-                    STORE_ID   + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    STORE_ID   + " INTEGER PRIMARY KEY , " +
                     STORE_NAME     + " TEXT NOT NULL, " +
                     STORE_URL +" TEXT NOT NULL)";
 
@@ -127,7 +129,6 @@ public class DataBase {
             db.execSQL(CREATE_STORE_TABLE);
             db.execSQL(CREATE_LIST_TABLE);
             db.execSQL(CREATE_PRODUCT_TABLE);
-            //db.execSQL(CREATE_TASK_TABLE);
 
             // insert default lists
             //db.execSQL("INSERT INTO list VALUES (0, 'Apples', 3)");
@@ -183,7 +184,41 @@ public class DataBase {
     }
 
 
-    public GrocerySingleton getTask(int id) {
+
+
+
+// ----------- CRUD on Product table -----------------
+    public Cursor getProductCursor (int listId){
+        String where = PRODUCT_ID + "= ?";
+        String[] whereArgs = { Integer.toString(listId)};
+
+        this.openReadableDB();
+        Cursor cursor = db.query(PRODUCT_TABLE, null,
+                where, whereArgs, null, null, null);
+
+        return cursor;
+    }
+
+    public ArrayList<Product> getProducts(int listId){
+        String where = PRODUCT_ID + "= ?";
+        String[] whereArgs = { Integer.toString(listId)};
+
+        this.openReadableDB();
+        Cursor cursor = db.query(PRODUCT_TABLE, null,
+                where, whereArgs, null, null, null);
+        ArrayList<Product> products= new ArrayList();
+        while(cursor.moveToNext()){
+            products.add((getProductFromCursor(cursor)));
+        }
+
+        this.closeCursor(cursor);
+        this.closeDB();
+
+        return products;
+    }
+
+
+    public Product getProduct(int id) {
         String where = PRODUCT_ID + "= ?";
         String[] whereArgs = { Integer.toString(id) };
 
@@ -191,26 +226,26 @@ public class DataBase {
         Cursor cursor = db.query(PRODUCT_TABLE,
                 null, where, whereArgs, null, null, null);
         cursor.moveToFirst();
-        GrocerySingleton task = getTaskFromCursor(cursor);
+        Product product = getProductFromCursor(cursor);
         this.closeCursor(cursor);
         this.closeDB();
 
-        return task;
+        return product;
     }
 
-    private static GrocerySingleton getTaskFromCursor(Cursor cursor) {
+    private static Product getProductFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0){
             return null;
         }
         else {
             try {
-                GrocerySingleton task = new GrocerySingleton(
+                Product product = new Product(
                         cursor.getInt(PRODUCT_ID_COL),
                         cursor.getInt(PLIST_ID_COL),
                         cursor.getString(PRODUCT_NAME_COL),
                         cursor.getInt(PRODUCT_QUANTITY_COL),
                         cursor.getInt(PRODUCT_CHECK_COL));
-                return task;
+                return product;
             }
             catch(Exception e) {
                 return null;
@@ -218,40 +253,168 @@ public class DataBase {
         }
     }
 
-    public long insertTask(GroceryItem task) {
+
+    public long insertProduct(Product product) {
         ContentValues cv = new ContentValues();
-        cv.put(PRODUCT_ID, task.getItemID());
-        cv.put(PLIST_ID, task.getListID());
-        cv.put(PRODUCT_NAME, task.getItemName());
-        cv.put(PRODUCT_QUANTITY, task.getItemQuantity());
-        cv.put(PRODUCT_CHECK, task.isChecked());
+        cv.put(PRODUCT_ID, product.getProductId());
+        cv.put(PLIST_ID, product.getListId());
+        cv.put(PRODUCT_NAME, product.getName());
+        cv.put(PRODUCT_QUANTITY, product.getQuantity());
+        cv.put(PRODUCT_CHECK, product.getChecked());
 
 
-        this.openWritableDB(); //Crashes here
+        this.openWritableDB();
         long rowID = db.insert(PRODUCT_TABLE, null, cv);
         this.closeDB();
         return rowID;
-
-
     }
 
 
-    //insert stores
-    public long insertStore(int id, String name, String URL) {
+    public int updateProduct(Product product){
         ContentValues cv = new ContentValues();
-        cv.put(STORE_ID, id);
+        cv.put(PLIST_ID, product.getListId());
+        cv.put(PRODUCT_NAME, product.getName());
+        cv.put(PRODUCT_QUANTITY, product.getQuantity());
+        cv.put(PRODUCT_CHECK, product.getChecked());
+
+
+
+        String where = PRODUCT_ID + "= ?";
+        String[] whereArgs = { String.valueOf(product.getProductId()) };
+
+        this.openWritableDB();
+        int rowCount = db.update(PRODUCT_TABLE, cv, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
+    }
+
+    public int deleteProduct(int productId){
+        String where = productId + "= ?";
+        String[] whereArgs = {String.valueOf(productId)};
+
+        this.openWritableDB();
+        int rowCount = db.delete(PRODUCT_TABLE, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
+    }
+
+
+
+    // ----------- CRUD on GroceryList table -----------------
+    public ArrayList<GroceryList> getGroceryLists() {
+        ArrayList<GroceryList> lists = new ArrayList();
+        openReadableDB();
+
+        Cursor cursor = db.query(LIST_TABLE,
+                null, null, null, null, null, null);
+        while (cursor.moveToNext()){
+            GroceryList list = new GroceryList();
+            list.setListId(cursor.getInt(LIST_ID_COL));
+            list.setDate(cursor.getString(LIST_DATE_COL));
+            list.setNumOfItems(cursor.getInt(LIST_ITEMS_COL));
+            list.setStoreId(cursor.getInt(LIST_STOREID_COL));
+
+            lists.add(list);
+        }
+        closeCursor(cursor);
+        closeDB();
+
+        return lists;
+    }
+
+    public GroceryList getGroceryList (int listId){
+        String where = LIST_ID + "= ?";
+        String[] whereArgs = {String.valueOf(listId)};
+
+        openReadableDB();
+        Cursor cursor = db.query(LIST_TABLE, null,
+                where, whereArgs, null, null, null);
+        GroceryList list = null;
+
+        list = new GroceryList(cursor.getInt(LIST_ID_COL),
+                               cursor.getInt(LIST_ITEMS_COL),
+                               cursor.getString(LIST_DATE_COL),
+                               cursor.getInt(LIST_STOREID_COL));
+
+        this.closeCursor(cursor);
+        this.closeDB();
+
+        return list;
+    }
+
+    public long insertGroceryList(GroceryList list) {
+        ContentValues cv = new ContentValues();
+        cv.put(LIST_ID, list.getListId());
+        cv.put(LIST_ITEMS, list.getNumOfItems());
+        cv.put(LIST_DATE, list.getDate());
+        cv.put(LIST_STOREID, list.getStoreId());
+
+        this.openWritableDB();
+        long rowID = db.insert(LIST_TABLE, null, cv);
+        this.closeDB();
+        return rowID;
+    }
+
+
+
+    // -------------------- CRUD on store table --------------------
+
+    public long insertStore(int storeId, String name, String URL){
+        ContentValues cv = new ContentValues();
+        cv.put(STORE_ID, storeId);
         cv.put(STORE_NAME, name);
         cv.put(STORE_URL, URL);
 
-
-
-        this.openWritableDB(); //Crashes here
+        this.openWritableDB();;
         long rowID = db.insert(STORE_TABLE, null, cv);
         this.closeDB();
         return rowID;
-
-
     }
+
+    public Store getStroe(int storeId){
+        String where = STORE_ID + "= ?";
+        String[] whereArgs = {String.valueOf(storeId)};
+
+        openReadableDB();
+        Cursor cursor = db.query(STORE_TABLE, null,
+                where, whereArgs, null, null, null);
+        Store store = null;
+
+        store = new Store(cursor.getInt(STORE_ID_COL),
+                cursor.getString(STORE_NAME_COL),
+                cursor.getString(STORE_URL_COL)
+                );
+
+        this.closeCursor(cursor);
+        this.closeDB();
+
+        return store;
+    }
+
+    public Store getStroe(String name){
+        String where = STORE_NAME + "= ?";
+        String[] whereArgs = { name };
+
+        openReadableDB();
+        Cursor cursor = db.query(STORE_TABLE, null,
+                where, whereArgs, null, null, null);
+        Store store = null;
+
+        store = new Store(cursor.getInt(STORE_ID_COL),
+                cursor.getString(STORE_NAME_COL),
+                cursor.getString(STORE_URL_COL)
+        );
+
+        this.closeCursor(cursor);
+        this.closeDB();
+
+        return store;
+    }
+
+
+
 
 
 
