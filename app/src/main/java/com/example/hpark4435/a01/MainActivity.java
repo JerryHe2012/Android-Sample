@@ -8,6 +8,7 @@
 package com.example.hpark4435.a01;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -38,6 +39,23 @@ public class MainActivity extends Activity {
         Thread.setDefaultUncaughtExceptionHandler(handler);
 
         setContentView(R.layout.activity_main);
+
+        // get instance of singleton
+        GrocerySingleton gs = GrocerySingleton.getInstance();
+
+        // set up database
+        Context newContext = getApplicationContext();
+        gs.db = new DataBase(newContext);
+
+        // fill up store table
+        String[] storeNames = getResources().getStringArray(R.array.store_name);
+        String[] storeURLs = getResources().getStringArray(R.array.store_url);
+        int i = 0;
+
+        for(String name : storeNames ){
+            gs.db.insertStore(i+1, name, storeURLs[i]);
+            i++;
+        }
 
         // allow the start plan button to get the start plan page
         btn_StartPlan = (Button)findViewById(R.id.btn_Start_Plan);

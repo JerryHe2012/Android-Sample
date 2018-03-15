@@ -33,7 +33,6 @@ public class DetailActivity extends Activity {
         setContentView(R.layout.activity_detail);
 
 
-        final DataBase db = new DataBase(this);
         final StringBuilder sb = new StringBuilder();
 
 

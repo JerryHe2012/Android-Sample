@@ -32,6 +32,8 @@ public class GrocerySingleton {
     private int listID;
     private int isChecked;
 
+    public DataBase db;
+
 
     /* METHOD       : getInstance
      * PARAMETER    : None
