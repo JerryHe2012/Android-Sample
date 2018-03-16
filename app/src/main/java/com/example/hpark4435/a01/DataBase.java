@@ -346,7 +346,6 @@ public class DataBase {
 
     public long insertGroceryList(GroceryList list) {
         ContentValues cv = new ContentValues();
-        cv.put(LIST_ID, list.getListId());
         cv.put(LIST_ITEMS, list.getNumOfItems());
         cv.put(LIST_DATE, list.getDate());
         cv.put(LIST_STOREID, list.getStoreId());
@@ -355,6 +354,25 @@ public class DataBase {
         long rowID = db.insert(LIST_TABLE, null, cv);
         this.closeDB();
         return rowID;
+    }
+
+
+    public int updateGroceryList(GroceryList list){
+        ContentValues cv = new ContentValues();
+        cv.put(LIST_ITEMS, list.getNumOfItems());
+        cv.put(LIST_DATE, list.getDate());
+        cv.put(LIST_STOREID, list.getStoreId());
+
+
+
+        String where = LIST_ID + "= ?";
+        String[] whereArgs = { String.valueOf(list.getListId()) };
+
+        this.openWritableDB();
+        int rowCount = db.update(LIST_TABLE, cv, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
     }
 
 

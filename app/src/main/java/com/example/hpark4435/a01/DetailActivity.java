@@ -204,20 +204,46 @@ public class DetailActivity extends Activity {
                     Log.i("Detail Activity", "User clicked on save plan");
                     int totalLine = grocery.getActualTotalLine();
 
-                    // build new plan
+                    // build new plan - to be deleted
                     GroceryPlan newPlan = new GroceryPlan();
                     newPlan.setDate(grocery.getDate());
+
+                    // build Grocery list object
+                    GroceryList newList = new GroceryList();
+                    newList.setDate(grocery.getDate());
+
+                    // get store id from database
+                    Store store = grocery.db.getStroe(grocery.getStoreName());
+
+                    newList.setStoreId(store.storeId);
+                    newList.setNumOfItems(0);
+
+                    // insert to database and get list id
+                    int listId = (int) grocery.db.insertGroceryList(newList);
+
+
+                    int numbOfItems = 0;  // item number
+                    Product product;
 
                     for (int i = 0; i < totalLine; i++)
                     {
                         if (grocery.getQunatity(i) != 0) //Ensure each item has a quantity of at least 1
                         {
+                            numbOfItems++;
+
                             TextView theCount = (TextView) findViewById((i * 6) + 1);
                             grocery.setItemName(theCount.getText().toString(), i);
 
+                            // TBD
                             GroceryItem newItem = new GroceryItem(i+1,1,grocery.getItemName(i), grocery.getQunatity(i));
-                            newPlan.addItem(newItem);
-                            long insertId = db.insertTask(newItem);
+
+                            // Create product object and add to database
+                            product = new Product();
+                            product.setListId(listId);
+                            product.setName(grocery.getItemName(i));
+                            product.setQuantity(grocery.getQunatity(i));
+
+                            long insertId = grocery.db.insertProduct(product);
                             if (insertId > 0) {
                                 sb.append("Row inserted! Insert Id: " + insertId + "\n");
                                 Toast.makeText(getApplicationContext(),"Saved to DB",Toast.LENGTH_SHORT).show();
@@ -225,8 +251,9 @@ public class DetailActivity extends Activity {
                         }
                     }
 
-                    // add new plan to the list
-                    grocery.addPlan(newPlan);
+                    newList.setNumOfItems(numbOfItems);
+                    newList.setListId(listId);
+                    grocery.db.updateGroceryList(newList);
                 
                     Intent getfinalpage = new Intent(DetailActivity.this, ResultActivity.class);
                     startActivity(getfinalpage); //Go to the next page
