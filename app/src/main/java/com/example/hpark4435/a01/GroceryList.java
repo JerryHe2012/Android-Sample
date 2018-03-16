@@ -1,8 +1,12 @@
 package com.example.hpark4435.a01;
 
-/**
- * Created by yingqi on 15/03/2018.
+/* FILE         : Product.java
+ * PROG         : PROG3150 - A02
+ * PROGRAMMER   : Jerry He, Kevin Park, Adam Sosnowski, Yingqi Li
+ * DATE         : 2018 - 3 - 16
+ * DESCRIPTION  : This class is used for modeling and encapsulating GroceryList.
  */
+
 
 public class GroceryList {
     int listId;
