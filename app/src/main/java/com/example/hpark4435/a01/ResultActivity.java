@@ -26,6 +26,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ResultActivity extends Activity {
 
     public Button btn_GoFirstScreen;
@@ -37,7 +39,17 @@ public class ResultActivity extends Activity {
         setContentView(R.layout.activity_result);
 
         final GrocerySingleton grocery = GrocerySingleton.getInstance();
-        int totalLine = grocery.getActualTotalLine();
+
+        // get grocery list from database
+        int listId = grocery.getListID();
+        GroceryList list = grocery.db.getGroceryList(listId);
+        int totalLine = list.getNumOfItems();
+        grocery.setNumberOfItem(list.getNumOfItems());
+        int checked = 0;
+
+        // get all product from database
+        ArrayList<Product> products = grocery.db.getProducts(listId);
+
         TableLayout theLayout = (TableLayout)findViewById(R.id.TLfinal);
 
         // Declare and Initialize of progress Bar
@@ -82,16 +94,18 @@ public class ResultActivity extends Activity {
         Log.i("Result Activity", "See date Information");
 
 
+        Product product = null;
         for (int i = 0; i < totalLine; i++)
         {
+            product = products.get(i);
 
             // if total quantity is not Zero
-            if (grocery.getQunatity(i) != 0) {
+            if (product.getQuantity() != 0) {
 
                 // Setting up ID number.
                 TableRow theRow = new TableRow(theLayout.getContext());
                 theRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
-                theRow.setId(i * 4);
+                theRow.setId(product.getProductId() * 4);
                 theLayout.addView(theRow);
                 Log.i("Result Activity", "Setting up ID Value");
 
@@ -99,8 +113,8 @@ public class ResultActivity extends Activity {
                 // Setting up each part with item they added.
                 TextView newItem = new TextView(theRow.getContext());
                 newItem.setLayoutParams(new TableRow.LayoutParams(itemWidth, TableLayout.LayoutParams.WRAP_CONTENT));
-                newItem.setId((i * 4) + 1);
-                newItem.setText(grocery.getItemName(i));                // getting name of item in the singleton object.
+                newItem.setId((product.getProductId() * 4) + 1);
+                newItem.setText(product.getName());                // getting name of item in the singleton object.
                 theRow.addView(newItem);
                 Log.i("Result Activity", "Got Item Name and displayed");
 
@@ -108,8 +122,8 @@ public class ResultActivity extends Activity {
                 // Setting up number of each item.
                 TextView newItemCount = new TextView(theRow.getContext());
                 newItemCount.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-                newItemCount.setId((i * 4) + 2);
-                newItemCount.setText(Integer.toString(grocery.getQunatity(i))); // getting quantity of each item user tried to buy.
+                newItemCount.setId((product.getProductId() * 4) + 2);
+                newItemCount.setText(Integer.toString(product.getQuantity())); // getting quantity of each item user tried to buy.
                 theRow.addView(newItemCount);
                 Log.i("Result Activity", "Getting how many items");
 
@@ -117,7 +131,11 @@ public class ResultActivity extends Activity {
                 // Creating Checkbox in the each line.
                 final CheckBox newCheck = new CheckBox(theRow.getContext());
                 newCheck.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-                newCheck.setId((i * 4) + 3);
+                newCheck.setId((product.getProductId() * 4) + 3);
+                if(product.getChecked()==Product.TURE){
+                    newCheck.setChecked(true);
+                    checked++;
+                }
                 theRow.addView(newCheck);
 
                 newCheck.setOnClickListener(new View.OnClickListener() {
@@ -125,13 +143,19 @@ public class ResultActivity extends Activity {
                     public void onClick(View view) {
 
                         try{
+                            // get product id in database
+                            int productId = view.getId();
+                            productId = (productId - 3) / 4;
+
                             // Take action.
                             Log.i("Result Activity", "[Log] Inside of setOnClickListner Checking.");
                             int totalchecked = grocery.getCheckQuantity();
                             int total = grocery.getNumberOfItem();
                             if (newCheck.isChecked()) {             // If user found item, they checked it.
+                                grocery.db.updateProductChecked(productId, 1);      // update to database
                                 totalchecked = totalchecked + 1;    // Increase +1 for progress bar displaying
                             } else {
+                                grocery.db.updateProductChecked(productId, 0);  // update to database
                                 totalchecked = totalchecked - 1;
                             }
                             grocery.setCheckQuantity(totalchecked);
@@ -146,6 +170,10 @@ public class ResultActivity extends Activity {
                 });
             }
         }
+
+        int totalProgress = (100 * checked) / list.getNumOfItems();
+        theBar.setProgress(totalProgress);
+        grocery.setCheckQuantity(checked);
 
         btn_GoFirstScreen = (Button) findViewById(R.id.btn_GoingFirstPage);
         btn_GoFirstScreen.setOnClickListener(new View.OnClickListener() {
