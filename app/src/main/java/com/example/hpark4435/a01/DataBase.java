@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.database.SQLException;
 
 import java.util.ArrayList;
 
@@ -75,7 +76,7 @@ public class DataBase {
 
     // CREATE and DROP TABLE statements - PRODUCT
     public static final String CREATE_PRODUCT_TABLE =
-            "CREATE TABLE [IF NOT EXISTS] " + PRODUCT_TABLE + " (" +
+            "CREATE TABLE IF NOT EXISTS " + PRODUCT_TABLE + " (" +
                     PRODUCT_ID   + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     PLIST_ID     + " INTEGER NOT NULL," +
                     PRODUCT_NAME + " TEXT NOT NULL , "     +
@@ -89,10 +90,10 @@ public class DataBase {
 
     // CREATE and DROP TABLE statements - STORE
     public static final String CREATE_STORE_TABLE =
-            "CREATE TABLE [IF NOT EXISTS] " + STORE_TABLE + " (" +
-                    STORE_ID   + " INTEGER PRIMARY KEY , " +
-                    STORE_NAME     + " TEXT NOT NULL, " +
-                    STORE_URL +" TEXT NOT NULL)";
+            "CREATE TABLE IF NOT EXISTS " + STORE_TABLE + " (" +
+            STORE_ID    + " INTEGER PRIMARY KEY, " +
+            STORE_NAME  + " TEXT NOT NULL, " +
+            STORE_URL   +" TEXT NOT NULL);";
 
     public static final String DROP_STORE_TABLE =
             "DROP TABLE IF EXISTS " + STORE_TABLE;
@@ -102,7 +103,7 @@ public class DataBase {
 
     // CREATE and DROP TABLE statements - LIST
     public static final String CREATE_LIST_TABLE =
-            "CREATE TABLE [IF NOT EXISTS] " + LIST_TABLE + " (" +
+            "CREATE TABLE " + LIST_TABLE + " (" +
                     LIST_ID   + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     LIST_ITEMS + " INTEGER NOT NULL, " +
                     LIST_DATE     + " TEXT NOT NULL, " +
@@ -129,12 +130,6 @@ public class DataBase {
             db.execSQL(CREATE_STORE_TABLE);
             db.execSQL(CREATE_LIST_TABLE);
             db.execSQL(CREATE_PRODUCT_TABLE);
-
-            // insert default lists
-            //db.execSQL("INSERT INTO list VALUES (0, 'Apples', 3)");
-            //db.execSQL("INSERT INTO list VALUES (1, 'Carrots', 7)");
-
-
         }
 
         @Override
