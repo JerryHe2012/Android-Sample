@@ -1,7 +1,10 @@
 package com.example.hpark4435.a01;
 
-/**
- * Created by yingqi on 15/03/2018.
+/* FILE         : GroceryList
+ * PROG         : PROG3150 - A02
+ * PROGRAMMER   : Jerry He, Kevin Park, Adam Sosnowski, Yingqi Li
+ * DATE         : 2018 - 3 - 16
+ * DESCRIPTION  : This GroceryList class is used for setting up the class of GroceryList table.
  */
 
 public class GroceryList {

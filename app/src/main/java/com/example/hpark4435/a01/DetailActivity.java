@@ -1,6 +1,6 @@
 package com.example.hpark4435.a01;
 //Name: Adam Sosnowski, Hyunbin Park, Jinaqing He, Yinqi Li
-//Date: 2/8/2018
+//Date: 3/16/2018
 //Course: Mobile applicatoin development assignment 1.
 //Description: This application will act as a grocery planner/list that a user will be able to use while grocery shopping. It is designed to be simple and easy to use
 //This particular file will contain the logic and code user to save items to the singleton class. Here, a user will be able to create/delete/edit new items for their grocery list.

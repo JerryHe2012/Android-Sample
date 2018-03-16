@@ -3,7 +3,7 @@ package com.example.hpark4435.a01;
 /* FILE         : ResultActivity.java
  * PROG         : PROG3150 - A01
  * PROGRAMMER   : Jerry He, Kevin Park, Adam Sosnowski, Yingqi Li
- * DATE         : 2018 - 2 - 9
+ * DATE         : 2018 - 3 - 14
  * DESCRIPTION  : This java file is used for displaying result of shopping list. It displays what user chose and saved.
  *                After that, user is able to see shopping list in this page, and can check if they found it in the market.
  *                Finally, progress bar will tell user how many items they found it.

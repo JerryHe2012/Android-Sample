@@ -10,64 +10,67 @@ import android.database.SQLException;
 
 import java.util.ArrayList;
 
-/**
- * Created by sosno on 2018-03-13.
+/* FILE         : Database.java
+ * PROG         : PROG3150 - A02
+ * PROGRAMMER   : Jerry He, Kevin Park, Adam Sosnowski, Yingqi Li
+ * DATE         : 2018 - 3 - 16
+ * DESCRIPTION  : This database java file includes all sql queries for this application and objects for creating tables.
  */
 
 public class DataBase {
 
 
     // database constants
-    public static final String DB_NAME = "Grocery.db";
+    public static final String DB_NAME = "Grocery.db";          //Data base name
     public static final int    DB_VERSION = 1;
 
     //Grocery list constants
-    public static final String LIST_TABLE = "GroceryList";
+    public static final String LIST_TABLE = "GroceryList";      //Grocery List table name
 
-    public static final String LIST_ID = "ListID";
+    public static final String LIST_ID = "ListID";              //Grocery List first column. "ListID" a primary key to keep track of the grocery lists a user creates
     public static final int    LIST_ID_COL = 0;
 
-    public static final String LIST_ITEMS = "totalItems";
+    public static final String LIST_ITEMS = "totalItems";       //Grocery List second column. "totalItems". This column is intended to keep track of the total items in the grocery list
     public static final int    LIST_ITEMS_COL = 1;
 
-    public static final String LIST_DATE = "Date";
+    public static final String LIST_DATE = "Date";              //Grocery List third column. "Date" will keep track of the date the grocery list is made for.
     public static final int    LIST_DATE_COL = 2;
 
-    public static final String LIST_STOREID = "StoreID"; // foreign key
+    public static final String LIST_STOREID = "StoreID";        //Grocery List fourth column. "StoreID" will keep track of the selected store for the grocery list. foreign key
     public static final int    LIST_STOREID_COL = 3;
 
 
     //Store table constants
-    public static final String STORE_TABLE = "Store";
+    public static final String STORE_TABLE = "Store";           //Store table name
 
-    public static final String STORE_ID = "StoreID";
+    public static final String STORE_ID = "StoreID";            //"StoreID", first column from store table intended to keep track of which store was selected for the list
     public static final int    STORE_ID_COL = 0;
 
-    public static final String STORE_NAME = "StoreName";
+    public static final String STORE_NAME = "StoreName";        //"StoreName", second column from store table used to keep track of the selected stores name
     public static final int    STORE_NAME_COL = 1;
 
-    public static final String STORE_URL = "URL";
+    public static final String STORE_URL = "URL";               //"URL" third column from store table used to keep track of the selected stores website link
     public static final int    STORE_URL_COL = 2;
 
 
 
     // product table constants
     //Table 1 : Keep track of grocery list items
-    public static final String PRODUCT_TABLE = "Product";
+    public static final String PRODUCT_TABLE = "Product";       //Product table name
 
-    public static final String PRODUCT_ID = "ItemID";
+    public static final String PRODUCT_ID = "ItemID";           //"ItemID" Used to keep track of the product identification number
     public static final int    PRODUCT_ID_COL = 0;
 
-    public static final String PLIST_ID = "ListID"; //foreign key
+    public static final String PLIST_ID = "ListID";             //"ListID" foreign key from the grocery list table used to reference products from a grocery list
     public static final int    PLIST_ID_COL = 1;
 
-    public static final String PRODUCT_NAME = "ItemName";
+    public static final String PRODUCT_NAME = "ItemName";       //"ItemName" Intended to keep track of the product names
     public static final int    PRODUCT_NAME_COL = 2;
 
-    public static final String PRODUCT_QUANTITY = "Quantity";
+    public static final String PRODUCT_QUANTITY = "Quantity";   //"Quantity" used to keep track of the number of the same products in the grocery list
     public static final int    PRODUCT_QUANTITY_COL = 3;
 
-    public static final String PRODUCT_CHECK = "isChecked";
+    public static final String PRODUCT_CHECK = "isChecked";     //"IsChecked" intended to keep track whether or not an item is selected off a grocery list
     public static final int    PRODUCT_CHECK_COL = 4;
 
 
@@ -117,6 +120,10 @@ public class DataBase {
 
 
 
+    /* METHOD       : DBHelper
+        SubClass    : SQLiteOpenHelper
+       DESCRIPTION  : This DBHelper class is used for constructing DBHelper.
+     */
     private static class DBHelper extends SQLiteOpenHelper {
         private Context context;
 
@@ -154,7 +161,7 @@ public class DataBase {
             Log.d("Grocery List", "Upgrading db from version "
                     + oldVersion + " to " + newVersion);
 
-            db.execSQL(DataBase.DROP_PRODUCT_TABLE);
+            db.execSQL(DataBase.DROP_PRODUCT_TABLE); //Re create the tables on database upgrade
             db.execSQL(DataBase.DROP_STORE_TABLE);
             db.execSQL(DataBase.DROP_LIST_TABLE);
             onCreate(db);
@@ -187,7 +194,7 @@ public class DataBase {
     }
 
 
-
+    //private method to close the cursor object used to read data from data base
     private void closeCursor(Cursor cursor) {
         if (cursor != null)
             cursor.close();
@@ -209,6 +216,11 @@ public class DataBase {
         return cursor;
     }
 
+    /* METHOD           : getProducts
+       PARAMETER        : int listId - the number of id of product table.
+       RETURN           : ArrayList - Returning all of items in the Products table.
+       DESCRIPTION      : This method is used for returning all items in the product table.
+     */
     public ArrayList<Product> getProducts(int listId){
         String where = LIST_ID + "= ?";
         String[] whereArgs = { Integer.toString(listId)};
@@ -221,13 +233,16 @@ public class DataBase {
             products.add((getProductFromCursor(cursor)));
         }
 
-        this.closeCursor(cursor);
-        this.closeDB();
+        this.closeCursor(cursor); //Clean up
+        this.closeDB();             //Finish reading from data base
 
-        return products;
+        return products;        // return result object
     }
 
-
+    //Function name :   getProduct()
+    //Parameters    :   int id; parameter used as the product item ID
+    //Returns:      :   returns the product object
+    //Description   : This method is used for returning specific product(item ID).
     public Product getProduct(int id) {
         String where = PRODUCT_ID + "= ?";
         String[] whereArgs = { Integer.toString(id) };

@@ -1,7 +1,7 @@
 /* FILE         : GetStoreActivity.java
  * PROG         : PROG3150 - A02
  * PROGRAMMER   : Jerry He, Kevin Park, Adam Sosnowski, Yingqi Li
- * DATE         : 2018 - 3 - 14
+ * DATE         : 2018 - 3 - 16
  * DESCRIPTION  : This file handles logic behind GetStoreActivity asking user to select date and store.
  *              It also shows explanation of store and link to selected store.
  */
@@ -43,39 +43,24 @@ public class GetStoreActivity extends Activity {
         setContentView(R.layout.activity_get_store);
 
 
-        final GrocerySingleton grocery = GrocerySingleton.getInstance();
+        final GrocerySingleton grocery = GrocerySingleton.getInstance();            // Calling GrocerySingleton class
 
-        final String[] stores = getResources().getStringArray(R.array.store_name);
-        String[] storesURL2 = getResources().getStringArray(R.array.store_url);
+        final String[] stores = getResources().getStringArray(R.array.store_name);  // Calling the all name of the stores.
+        String[] storesURL2 = getResources().getStringArray(R.array.store_url);     // Calling the all URL of the each store.
 
 
-       // DataBase db = new DataBase(this);
-       // StringBuilder sb = new StringBuilder();
-//        long insertId;
-//        try {
-//
-//
-//            for (int i = 0; i < stores.length; i++) {
-//                insertId = db.insertStore(i + 1, stores[i], storesURL2[i]);
-//                if (insertId > 0) {
-//                    sb.append("Row inserted! Insert Id: " + insertId + "\n");
-//                    Toast.makeText(getApplicationContext(), "Saved to DB", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
-//        catch(Exception e)
-//        {
-//            Log.e("Result Activity", e.toString());
-//        }
-
+        // Setting up Spinner by using store name.
         Spinner theSpinner = (Spinner)findViewById(R.id.spinner);
         final CustomSpinnerAdapter spinnerAdapter = new CustomSpinnerAdapter(this, stores);
         theSpinner.setAdapter(spinnerAdapter);
         theSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+
+
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, final int i, long l) {
-                AsyncStore syns = new AsyncStore();
-                syns.execute(new Integer[] {i});
+                AsyncStore syns = new AsyncStore();                 // Calling AsyncStore method for using Asyn subclass.
+                syns.execute(new Integer[] {i});                    // Using execute method
                 TextView description = (TextView)findViewById(R.id.textView2);
                 description.setOnClickListener(new View.OnClickListener() {
                     @Override

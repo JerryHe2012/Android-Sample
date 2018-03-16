@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-/**
- * Created by jhe9837 on 3/13/2018.
+/* FILE         : CustomerSpinnerAdapter
+ * PROG         : PROG3150 - A02
+ * PROGRAMMER   : Jerry He, Kevin Park, Adam Sosnowski, Yingqi Li
+ * DATE         : 2018 - 3 - 16
+ * DESCRIPTION  : This java file is connecting with Spinner in the GetStoreActivity java file.
  */
 
 public class CustomSpinnerAdapter extends BaseAdapter {
@@ -34,11 +37,23 @@ public class CustomSpinnerAdapter extends BaseAdapter {
         return 0;
     }
 
+
+    /* METHOD       : getItem
+     * PARAMETER    : int i - number of item in the spinner
+     * RETURN       : Object - the object value of item
+     * DESCRIPTION  : this is getter of this CustomSpinner class.
+     */
     @Override
     public Object getItem(int i) {
         return countries[i];
     }
 
+
+    /* METHOD       : getView
+       PARAMETER    : int i - the number of item that wants to see.=
+        RETURN      : View - Returning row that user wants to see.
+        DESCRIPTION :  This method is used for getting the number of index number user wants to see and return into View object.
+     */
     @Override
     public View getView(int i, View view, ViewGroup viewGroup){
         View row = inflater.inflate(R.layout.spinner_row,null);

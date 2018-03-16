@@ -1,6 +1,6 @@
 // File:        MainActivity.java
 // Project:     Android-A01
-// Date:        Feb. 8 2018
+// Date:        3. 16 2018
 // Programmer:  Jianqing He, Adam Sosnowski, Hyunbin Park, YingQi Li
 // Description: This is the first main page of the Android Application.
 //              It is used to start the planning and check the plan that already made.
