@@ -39,6 +39,7 @@ public class ResultActivity extends Activity {
         setContentView(R.layout.activity_result);
 
         final GrocerySingleton grocery = GrocerySingleton.getInstance();
+        grocery.setTfResult(true);
 
         // get grocery list from database
         int listId = grocery.getListID();

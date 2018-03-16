@@ -18,8 +18,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,6 +97,22 @@ public class GetStoreActivity extends Activity {
             }
         });
 
+        Switch infoswicth = (Switch) findViewById(R.id.infoswitch);
+        infoswicth.setChecked(true);
+        infoswicth.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                TextView description = (TextView)findViewById(R.id.textView2);
+                if (!b)
+                {
+                    description.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    description.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         btn_ChooseItem = (Button)findViewById(R.id.btn_ChooseItem);
         btn_ChooseItem.setOnClickListener(new View.OnClickListener()

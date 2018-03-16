@@ -18,8 +18,6 @@ public class GrocerySingleton {
 
 
     private static GrocerySingleton ourInstance = null;         // Allow to access to each objects in this singleton class.
-    private static List<GroceryPlan> planList;                  // List objects of grocery plan order list.
-    private int numberOfPlans;                                  // Number of plan.
 
     private String planDate;                                    // Date of plan to do shopping
     private String storeName;                                   // Name of the store user wants to shop
@@ -28,9 +26,8 @@ public class GrocerySingleton {
     private int NumberOfItem;                                   // Number of total item list
     private int actualTotalLine;                                // Total line in the android screen.
     private int checkQuantity;                                  // How many items that user found in the store.
-    private int itemID;
-    private int listID;
-    private int isChecked;
+    private int listID;                                         // Current working Grocery List ID in database
+    private boolean tfResult;                                   //
 
     public DataBase db;
 
@@ -52,38 +49,20 @@ public class GrocerySingleton {
     // METHOD       : GrocerySingleton Construtor
     // DESCRIPTION  : A private constructor so no instances can be made outside this class
     private GrocerySingleton() {
-        planList = new ArrayList<>();
-        numberOfPlans = 0;
+        tfResult = false;
     } // By using this, no outer class can initialize this class's object
 
 
 
-    public GrocerySingleton(int itemID, int ListID, String name, int Quantity, int isCheck) {
-        this.itemID = itemID;
+    public GrocerySingleton(int ListID, String name, int Quantity) {
         this.listID = ListID;
         this.itemName[NumberOfItem] = name;
         this.itemQuantity[NumberOfItem] = Quantity;
-        this.isChecked = isCheck;
+        this.tfResult =false;
 
     } // By using this, no outer class can initialize this class's object
 
 
-
-    /* METHOD       : addPlan
-     * PARAMETER    : GrocereyPlan newPlan - new Plan that user wants to add
-     * RETURN       : None
-     * DESCRIPTION  : This method is used for giving access to each classes.
-     *                Through this method, it enables to acess each item in the different classes.
-     */
-    public void addPlan(GroceryPlan newPlan){
-        planList.add(newPlan);
-        numberOfPlans++;
-    }
-
-    /* METHOD       : getNumberOfPlans Mutator
-       DESCRIPTION  : This method is used for getting the number of plan in this singleton.
-     */
-    public int getNumberOfPlans() {return numberOfPlans;}
 
     public String getItemName(int index) {return itemName[index];} // getItemName Mutator : Used for accessing the name of the item
     public int getQunatity(int index) {return itemQuantity[index];}// getQuantity Mutator: Used for getting the quantity of each item
@@ -92,7 +71,8 @@ public class GrocerySingleton {
     public String getStoreName() {return storeName; }              // getStoreName mutator  : Used for getting the name of the store.
     public int getCheckQuantity() {return  checkQuantity; }        // getCheckQuantity mutator: used for getting the checkQuantity value.
     public int getActualTotalLine() {return actualTotalLine;}      // getActualTotalLine mutator: getting actualTotalLine value.
-    public int getItemID(){return itemID;}
+    public int getListID(){return listID;}
+    public boolean getTfResult() { return tfResult; }
 
     public void setNumberOfItem(int numItem)
     {
@@ -152,4 +132,8 @@ public class GrocerySingleton {
     // Setter for ActualTotalLine
     // Description : Used for setting up Total line of screen.
     public void setActualTotalLine(int value) {actualTotalLine = value; }
+
+    public void setListID(int id) { this.listID = id; }
+
+    public void setTfResult(boolean tfResult) { this.tfResult = tfResult; }
 }

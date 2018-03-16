@@ -204,10 +204,6 @@ public class DetailActivity extends Activity {
                     Log.i("Detail Activity", "User clicked on save plan");
                     int totalLine = grocery.getActualTotalLine();
 
-                    // build new plan - to be deleted
-                    GroceryPlan newPlan = new GroceryPlan();
-                    newPlan.setDate(grocery.getDate());
-
                     // build Grocery list object
                     GroceryList newList = new GroceryList();
                     newList.setDate(grocery.getDate());
@@ -220,7 +216,7 @@ public class DetailActivity extends Activity {
 
                     // insert to database and get list id
                     int listId = (int) grocery.db.insertGroceryList(newList);
-
+                    grocery.setListID(listId);
 
                     int numbOfItems = 0;  // item number
                     Product product;
@@ -233,9 +229,6 @@ public class DetailActivity extends Activity {
 
                             TextView theCount = (TextView) findViewById((i * 6) + 1);
                             grocery.setItemName(theCount.getText().toString(), i);
-
-                            // TBD
-                            GroceryItem newItem = new GroceryItem(i+1,1,grocery.getItemName(i), grocery.getQunatity(i));
 
                             // Create product object and add to database
                             product = new Product();

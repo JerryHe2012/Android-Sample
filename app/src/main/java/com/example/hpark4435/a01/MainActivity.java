@@ -72,13 +72,18 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view)
             {
-                try{
-                    Log.i("Main Activity", "creating the result activity page");
-                    Intent getFinalPage = new Intent(MainActivity.this, ResultActivity.class);
-                    startActivity(getFinalPage);
+                if (GrocerySingleton.getInstance().getTfResult()){
+                     try{
+                         Log.i("Main Activity", "creating the result activity page");
+                         Intent getFinalPage = new Intent(MainActivity.this, ResultActivity.class);
+                         startActivity(getFinalPage);
+                     }
+                     catch(Exception e){
+                         Log.e("Result Activity", e.toString());
+                     }
                 }
-                catch(Exception e){
-                    Log.e("Result Activity", e.toString());
+                else {
+                    Toast.makeText(getApplicationContext(), "No Recent Plan Availabe...", Toast.LENGTH_SHORT).show();
                 }
             }});
 

@@ -52,7 +52,7 @@ public class DataBase {
 
 
     // product table constants
-    //Table 1 : Kepp track of grocery list items
+    //Table 1 : Keep track of grocery list items
     public static final String PRODUCT_TABLE = "Product";
 
     public static final String PRODUCT_ID = "ItemID";
@@ -210,7 +210,7 @@ public class DataBase {
     }
 
     public ArrayList<Product> getProducts(int listId){
-        String where = PRODUCT_ID + "= ?";
+        String where = LIST_ID + "= ?";
         String[] whereArgs = { Integer.toString(listId)};
 
         this.openReadableDB();
@@ -290,6 +290,20 @@ public class DataBase {
 
         String where = PRODUCT_ID + "= ?";
         String[] whereArgs = { String.valueOf(product.getProductId()) };
+
+        this.openWritableDB();
+        int rowCount = db.update(PRODUCT_TABLE, cv, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
+    }
+
+    public int updateProductChecked(int pId, int checked){
+        ContentValues cv = new ContentValues();
+        cv.put(PRODUCT_CHECK, checked);
+
+        String where = PRODUCT_ID + "= ?";
+        String[] whereArgs = { String.valueOf(pId)};
 
         this.openWritableDB();
         int rowCount = db.update(PRODUCT_TABLE, cv, where, whereArgs);
@@ -441,9 +455,6 @@ public class DataBase {
 
         return store;
     }
-
-
-
 }
 
 
