@@ -118,10 +118,12 @@ public class DataBase {
 
 
     private static class DBHelper extends SQLiteOpenHelper {
+        private Context context;
 
         public DBHelper(Context context, String name,
                         SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
+            this.context = context;
         }
 
         @Override
@@ -130,6 +132,19 @@ public class DataBase {
             db.execSQL(CREATE_STORE_TABLE);
             db.execSQL(CREATE_LIST_TABLE);
             db.execSQL(CREATE_PRODUCT_TABLE);
+
+            // fill up store table
+            String[] storeNames = context.getResources().getStringArray(R.array.store_name);
+            String[] storeURLs = context.getResources().getStringArray(R.array.store_url);
+            int i = 0;
+            String sql;
+
+            for(String name : storeNames ){
+                sql = "INSERT INTO "+STORE_TABLE+" ("+STORE_ID+","+STORE_NAME+","+STORE_URL+
+                        ") VALUES ("+Integer.toString(i+1)+", '"+name+"', '"+storeURLs[i]+"')";
+                db.execSQL(sql);
+                i++;
+            }
         }
 
         @Override
@@ -251,7 +266,6 @@ public class DataBase {
 
     public long insertProduct(Product product) {
         ContentValues cv = new ContentValues();
-        cv.put(PRODUCT_ID, product.getProductId());
         cv.put(PLIST_ID, product.getListId());
         cv.put(PRODUCT_NAME, product.getName());
         cv.put(PRODUCT_QUANTITY, product.getQuantity());
@@ -328,6 +342,8 @@ public class DataBase {
                 where, whereArgs, null, null, null);
         GroceryList list = null;
 
+        cursor.moveToFirst();
+
         list = new GroceryList(cursor.getInt(LIST_ID_COL),
                                cursor.getInt(LIST_ITEMS_COL),
                                cursor.getString(LIST_DATE_COL),
@@ -372,7 +388,7 @@ public class DataBase {
 
 
 
-    // -------------------- CRUD on store table --------------------
+    // -------------------- Operations on store table --------------------
 
     public long insertStore(int storeId, String name, String URL){
         ContentValues cv = new ContentValues();
@@ -386,7 +402,7 @@ public class DataBase {
         return rowID;
     }
 
-    public Store getStroe(int storeId){
+    public Store getStore(int storeId){
         String where = STORE_ID + "= ?";
         String[] whereArgs = {String.valueOf(storeId)};
 
@@ -394,7 +410,7 @@ public class DataBase {
         Cursor cursor = db.query(STORE_TABLE, null,
                 where, whereArgs, null, null, null);
         Store store = null;
-
+        cursor.moveToFirst();
         store = new Store(cursor.getInt(STORE_ID_COL),
                 cursor.getString(STORE_NAME_COL),
                 cursor.getString(STORE_URL_COL)
@@ -406,7 +422,7 @@ public class DataBase {
         return store;
     }
 
-    public Store getStroe(String name){
+    public Store getStore(String name){
         String where = STORE_NAME + "= ?";
         String[] whereArgs = { name };
 
@@ -414,7 +430,7 @@ public class DataBase {
         Cursor cursor = db.query(STORE_TABLE, null,
                 where, whereArgs, null, null, null);
         Store store = null;
-
+        cursor.moveToFirst();
         store = new Store(cursor.getInt(STORE_ID_COL),
                 cursor.getString(STORE_NAME_COL),
                 cursor.getString(STORE_URL_COL)
@@ -428,37 +444,6 @@ public class DataBase {
 
 
 
-
-
-
-    public int updateTask(GrocerySingleton task) {
-        ContentValues cv = new ContentValues();
-        cv.put(PRODUCT_ID, task.getItemID());
-        cv.put(PRODUCT_NAME, task.getItemName(task.getItemID()));
-        cv.put(PRODUCT_QUANTITY, task.getQunatity(task.getItemID()));
-
-
-
-        String where = PRODUCT_ID + "= ?";
-        String[] whereArgs = { String.valueOf(task.getNumberOfPlans()) }; //Is number of plans correct?
-
-        this.openWritableDB();
-        int rowCount = db.update(PRODUCT_TABLE, cv, where, whereArgs);
-        this.closeDB();
-
-        return rowCount;
-    }
-
-    public int deleteListItem(long id) {
-        String where = PRODUCT_ID + "= ?";
-        String[] whereArgs = { String.valueOf(id) };
-
-        this.openWritableDB();
-        int rowCount = db.delete(PRODUCT_TABLE, where, whereArgs);
-        this.closeDB();
-
-        return rowCount;
-    }
 }
 
 

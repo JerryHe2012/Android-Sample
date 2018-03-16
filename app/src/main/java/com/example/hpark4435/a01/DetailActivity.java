@@ -213,7 +213,7 @@ public class DetailActivity extends Activity {
                     newList.setDate(grocery.getDate());
 
                     // get store id from database
-                    Store store = grocery.db.getStroe(grocery.getStoreName());
+                    Store store = grocery.db.getStore(grocery.getStoreName());
 
                     newList.setStoreId(store.storeId);
                     newList.setNumOfItems(0);
