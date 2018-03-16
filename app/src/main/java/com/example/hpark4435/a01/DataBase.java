@@ -204,7 +204,7 @@ public class DataBase {
 
 
 
-// ----------- CRUD on Product table -----------------
+// ----------- Operations on Product table -----------------
     public Cursor getProductCursor (int listId){
         String where = PRODUCT_ID + "= ?";
         String[] whereArgs = { Integer.toString(listId)};
@@ -340,7 +340,7 @@ public class DataBase {
 
 
 
-    // ----------- CRUD on GroceryList table -----------------
+    // ----------- Operations on GroceryList table -----------------
     public ArrayList<GroceryList> getGroceryLists() {
         ArrayList<GroceryList> lists = new ArrayList();
         openReadableDB();
