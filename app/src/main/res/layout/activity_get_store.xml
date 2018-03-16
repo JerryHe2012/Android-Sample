@@ -21,16 +21,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="50dp"
+            android:layout_alignParentTop="true"
             android:calendarViewShown="false" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/datePicker"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="32dp"
             android:gravity="center"
             android:text="Pick the Store"
             android:textSize="30sp" />
@@ -41,7 +40,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textView3"
-            android:layout_marginTop="20dp"
             android:textAlignment="center" />
 
         <Button
@@ -59,7 +57,15 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/btn_ChooseItem"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/spinner"
+            android:layout_below="@+id/infoswitch"
             android:text="TextView" />
+
+        <Switch
+            android:id="@+id/infoswitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/spinner"
+            android:text="Store Info" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
